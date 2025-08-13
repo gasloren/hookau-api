@@ -1,0 +1,31 @@
+import { MongoClient } from 'mongodb';
+
+// -------------------------------
+
+function connectToMongoDB(): Promise<MongoClient> {
+  return new Promise((resolve, reject) => {
+  // ... (MongoDB connection setup) ...
+    MongoClient.connect(process.env.MONGO_URI || '')
+    .then(client => {
+      resolve(client);
+    })
+    .catch(err => {
+      reject(err); // Exit if initial connection fails
+    });
+  });
+}
+
+// ---
+
+export default async function dbConnect() {
+
+  try {
+    const mongoClient = await connectToMongoDB();
+    console.log('Connected to MongoDB');
+    return mongoClient;
+  } catch(err) {
+    console.error('MongoDB connection error:', err);
+    process.exit(1); // Exit if initial connection fails
+  }
+
+}
