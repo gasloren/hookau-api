@@ -4,16 +4,14 @@ import cors from 'cors';
 
 import dbConnect from './mongo/db.connect.js';
 
-import { getDirname, gracefulShutdown } from './utils.js';
-import Database from './mongo/database.js';
-
-// import RedisCtl from './controllers/redis-db/RedisCtl';
-// import MongoDB from './controllers/mongo-db/MongoDB';
-// import Database from './database/Database';
-// import handleExceptions from './handlers/handle.exceptions';
-// import setupServer from './startup/setup.server';
-// import { newError } from './handlers/errors.handler';
-// import redisConnect from './controllers/redis-db/redis.connect';
+import { getDirname } from './utils.js';
+import { apiRoutes } from './routes/api.routes.js';
+import { gracefulShutdown } from './handlers/shut.down.js';
+import {
+  checkApiCommKey,
+  attachApiMethods,
+  notFoundHandler
+} from './middlewares/middlewares.js';
 
 // -------------------------------
 
@@ -41,24 +39,30 @@ export default async function serverApp({
   // const redisClient = await redisConnect(process.env.REDIS_URL || '');
   // const redisCtl = RedisCtl(redisClient);
 
+  // If error it will exit server
   const mongoClient = await dbConnect(); // MongoDB client instance
 
   app.use(cors());
   app.use(express.json({ limit: '10mb' })); // <-- for base64 images
   app.use(express.static(publicDir));
-  app.use((req, res, next) => {
-    req.mdb = Database(mongoClient);
-    next();
-  });
 
-  // Middlewares - Cors / authentication / routes
-  // setupServer(app, redisCtl, database);
-  
+  // custom middlewares
+  checkApiCommKey(app); // req.headers['x-api-comm-key']
+  attachApiMethods(app, mongoClient); // req.api = methods
+
+  // all api routes
+  apiRoutes(app);
+
+  // must be placed after api routes
+  notFoundHandler(app);
+
   const server = app.listen(port, () => {
     console.log(`${name} listening on port ${port} - ${env}`);
-    // Here we send the ready signal to PM2
-    // configure "wait_ready: true" on ecosystem.config.js
-    // process.send('ready');
+    if (env === 'production' && process?.send) {
+      // Here we send the ready signal to PM2
+      // configure "wait_ready: true" on ecosystem.config.js
+      process.send('ready');
+    }
   });
 
   // Listen for termination signals

@@ -1,27 +1,6 @@
-import type { IncomingMessage, Server, ServerResponse } from 'http';
 import { dirname } from 'path';
 import { fileURLToPath } from 'url';
-import type { MongoClient } from 'mongodb';
 import { customAlphabet } from 'nanoid';
-
-
-// --
-
-type AppServer = Server<typeof IncomingMessage, typeof ServerResponse>;
-
-// --
-// Graceful shutdown function
-export function gracefulShutdown(server: AppServer, client?: MongoClient) {
-  console.log('Initiating graceful shutdown...');
-  server.close(() => { // Stop accepting new connections
-    console.log('Express server closed.');
-    if (client) {
-      client.close();
-    } else {
-      process.exit(0);
-    }
-  });
-}
 
 // --
 
