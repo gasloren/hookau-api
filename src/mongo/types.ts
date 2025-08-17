@@ -2,14 +2,15 @@ import type {
   City,
   Zone,
   Store,
-  City_V1
+  City_V1,
+  ApiLogs
 } from '../_types/models/index.js';
 
 // ----------
 
 export type StringId<T> = T & { _id: string }; 
 
-export interface IDbCollection<Model> {
+export interface DbMethods<Model> {
   search(filters: object, options?: object): Promise<Model[]>;
   getOne(filters: object, options?: object): Promise<Model | null>;
   insert(document: object): Promise<string>;
@@ -28,10 +29,11 @@ export type TCollName =
   'users';
 
 export interface IDatabase {
-  cities: IDbCollection<City>;
-  zones: IDbCollection<Zone>;
-  stores: IDbCollection<Store>;
+  cities: DbMethods<City>;
+  zones: DbMethods<Zone>;
+  stores: DbMethods<Store>;
+  apiLogs: DbMethods<ApiLogs>;
   v1: {
-    cities: IDbCollection<City_V1>;
+    cities: DbMethods<City_V1>;
   }
 }

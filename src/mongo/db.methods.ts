@@ -1,13 +1,17 @@
 import type { Collection } from 'mongodb';
 import { randomId } from './random.id.js';
-import type { IDbCollection, StringId } from './types.js';
+import type { DbMethods, StringId } from './types.js';
+
+// ----
 
 // force _id to string
 type TCursor = Collection<{ _id: string; }>;
 
 // ----
 
-export default function dbMethods<Model>(cursor: TCursor): IDbCollection<Model> {
+export default function dbMethods<Model>(
+  cursor: TCursor
+): DbMethods<Model> {
 
   const search = async (filters: object, options = {}) => {
     try {

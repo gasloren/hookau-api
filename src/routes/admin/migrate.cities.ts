@@ -5,6 +5,7 @@ import type {
 } from '../../_types/request/admins.api.js';
 
 import { adminsApi } from '../../api-admins/admins.api.js';
+import { apiLogger } from '../../handlers/api.logger.js';
 
 // ---
 
@@ -16,9 +17,13 @@ export function migrateCities(app: Application) {
     req: Request,
     res: Response
   ) => {
-    const result = await adminsApi(req.mdb).migrateCitites();
-    const statusCode = !result?.success ? 202 : 200;
-    res.status(statusCode).json(result);
+    try {
+      const result = await adminsApi(req.mdb).migrateCitites();
+      const statusCode = !result?.success ? 202 : 200;
+      res.status(statusCode).json(result);
+    } catch(error) {
+      await apiLogger(req.mdb, path, error);
+    }
   });
 
 }

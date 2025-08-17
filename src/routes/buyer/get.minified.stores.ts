@@ -6,6 +6,7 @@ import type {
 } from '../../_types/request/buyers.api.js';
 
 import { buyersApi } from '../../api-buyers/buyers.api.js';
+import { apiLogger } from '../../handlers/api.logger.js';
 
 // ---
 
@@ -17,9 +18,13 @@ export function getMinifiedStores(app: Application) {
     req: Request,
     res: Response
   ) => {
-    const result = await buyersApi(req.mdb).getMinifiedStores(req.body);
-    const statusCode = !result?.success ? 202 : 200;
-    res.status(statusCode).json(result);
+    try {
+      const result = await buyersApi(req.mdb).getMinifiedStores(req.body);
+      const statusCode = !result?.success ? 202 : 200;
+      res.status(statusCode).json(result);
+    } catch(error) {
+      await apiLogger(req.mdb, path, error);
+    }
   });
 
 }

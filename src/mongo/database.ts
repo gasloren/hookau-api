@@ -11,6 +11,7 @@ export function Database(mdb: Db): IDatabase {
     cities: dbMethods(mdb.collection('cities')),
     zones: dbMethods(mdb.collection('zones')),
     stores: dbMethods(mdb.collection('stores')),
+    apiLogs: dbMethods(mdb.collection('api_logs')),
     v1: {
       cities: dbMethods(mdb.collection('cities'))
     }
