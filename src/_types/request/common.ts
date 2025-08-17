@@ -13,9 +13,4 @@ export interface HeadersApi {
   'X-Hookau-Session-Token'?: string;
 }
 
-export interface ApiResponse<T> {
-  success?: boolean;
-  message?: string;
-  redirect?: string;
-  payload?: T;
-}
+export type ApiResponse<Payload> = [ string | null, Payload | null ];

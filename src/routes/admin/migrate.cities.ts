@@ -18,8 +18,8 @@ export function migrateCities(app: Application) {
     res: Response
   ) => {
     try {
-      const result = await adminsApi(req.mdb).migrateCitites();
-      const statusCode = !result?.success ? 202 : 200;
+      const result = await adminsApi(req.mdb).migrateCities();
+      const statusCode = !result?.[1] ? 202 : 200;
       res.status(statusCode).json(result);
     } catch(error) {
       await apiLogger(req.mdb, path, error);

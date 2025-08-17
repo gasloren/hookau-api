@@ -36,12 +36,7 @@ export function getMinifiedStores(
 
     const minified = toMinifiedStores(stores);
 
-    return {
-      success: !!minified?.length,
-      payload: {
-        stores: minified
-      }
-    };
+    return [ null, minified ];
 
   }
 

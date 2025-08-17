@@ -2,6 +2,6 @@
 
 export interface ApiLogs {
   path: string;
-  error: any;
+  error: Error;
   dated: string;
 }

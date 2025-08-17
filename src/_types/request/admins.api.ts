@@ -12,9 +12,9 @@ export type TAdminsEndpoint =
 
 // ---
 
-export type MigrateCitiesResponse = ApiResponse<{
-  cities: City[];
-}>;
+export type MigrateCitiesPayload = City[];
+
+export type MigrateCitiesResponse = ApiResponse<MigrateCitiesPayload>;
 
 export type IMigrateCities = () => Promise<MigrateCitiesResponse>;
 
@@ -23,7 +23,7 @@ export type IMigrateCities = () => Promise<MigrateCitiesResponse>;
 export interface IAdminsApi {
 
   // get stores minified list 
-  migrateCitites: IMigrateCities;
+  migrateCities: IMigrateCities;
   
 
 }

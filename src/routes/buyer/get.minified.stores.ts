@@ -20,7 +20,7 @@ export function getMinifiedStores(app: Application) {
   ) => {
     try {
       const result = await buyersApi(req.mdb).getMinifiedStores(req.body);
-      const statusCode = !result?.success ? 202 : 200;
+      const statusCode = !result?.[1] ? 202 : 200;
       res.status(statusCode).json(result);
     } catch(error) {
       await apiLogger(req.mdb, path, error);

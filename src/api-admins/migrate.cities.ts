@@ -52,12 +52,11 @@ export function migrateCities(
     
     console.log({ removedCities })
 
-    return {
-      success: count === cities_v1.length,
-      payload: {
-        cities: await mdb.cities.search({})
-      }
-    }
+    
+    return [
+      null,
+      await mdb.cities.search({})
+    ];
     
   }
 

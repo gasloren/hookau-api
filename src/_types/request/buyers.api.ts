@@ -18,9 +18,9 @@ export type GetMinifiedStoresParams = {
   city: string;
 }
 
-export type GetMinifiedStoresResponse = ApiResponse<{
-  stores?: StoreMinified[];
-}>;
+export type GetMinifiedStoresPayload = StoreMinified[];
+
+export type GetMinifiedStoresResponse = ApiResponse<GetMinifiedStoresPayload>;
 
 export type GetModifiedStores = (
   params: GetMinifiedStoresParams
