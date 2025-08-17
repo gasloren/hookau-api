@@ -5,13 +5,13 @@ import cors from 'cors';
 import dbConnect from './mongo/db.connect.js';
 
 import { getDirname } from './utils.js';
-import { apiRoutes } from './routes/api.routes.js';
-import { gracefulShutdown } from './handlers/shut.down.js';
 import {
   checkApiCommKey,
   attachApiMethods,
   notFoundHandler
 } from './middlewares/middlewares.js';
+import { apiRoutes } from './routes/api.routes.js';
+import { gracefulShutdown } from './handlers/shut.down.js';
 
 // -------------------------------
 
