@@ -1,7 +1,6 @@
 import type { Db } from 'mongodb';
-import dbCursor from './db.collection.js';
+import dbMethods from './db.methods.js';
 
-import * as Model from '../models/index.js';
 import type { IDatabase } from './types.js';
 
 // --
@@ -9,10 +8,11 @@ import type { IDatabase } from './types.js';
 export function Database(mdb: Db): IDatabase {
 
   return {
-    cities: dbCursor<Model.City>(mdb.collection('cities')),
-    zones: dbCursor<Model.Zone>(mdb.collection('zones')),
+    cities: dbMethods(mdb.collection('cities')),
+    zones: dbMethods(mdb.collection('zones')),
+    stores: dbMethods(mdb.collection('stores')),
     v1: {
-      cities: dbCursor<Model.City_V1>(mdb.collection('cities'))
+      cities: dbMethods(mdb.collection('cities'))
     }
   };
 

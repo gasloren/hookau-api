@@ -2,17 +2,16 @@
 // import { IDatabase } from './src/database/types';
 // import { IRedisCtl } from './src/controllers/redis-db/types';
 
-import type { IMethods } from './src/methods/types.ts';
+import type { IDatabase } from './src/mongo/types.ts';
 
-
-// ------
+// -----
 
 export {}
 
 declare global {
   namespace Express {
     export interface Request {
-      api: IMethods;
+      mdb: IDatabase;
       // redisCtl: IRedisCtl;
       // database: IDatabase;
       // appName?: Shared.AppName;

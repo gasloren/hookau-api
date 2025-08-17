@@ -1,10 +1,8 @@
-import type { CityCode } from './shared.js';
 
-// --
 
 export interface Zone {
   _id: string;
-  city: CityCode;
+  city: string;
   code: string;
   name: string;
   cost: number;

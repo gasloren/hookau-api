@@ -1,4 +1,9 @@
-import * as Model from '../models/index.js';
+import type {
+  City,
+  Zone,
+  Store,
+  City_V1
+} from '../_types/models/index.js';
 
 // ----------
 
@@ -23,9 +28,10 @@ export type TCollName =
   'users';
 
 export interface IDatabase {
-  cities: IDbCollection<Model.City>;
-  zones: IDbCollection<Model.Zone>;
+  cities: IDbCollection<City>;
+  zones: IDbCollection<Zone>;
+  stores: IDbCollection<Store>;
   v1: {
-    cities: IDbCollection<Model.City_V1>;
+    cities: IDbCollection<City_V1>;
   }
 }

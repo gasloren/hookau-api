@@ -7,7 +7,7 @@ type TCursor = Collection<{ _id: string; }>;
 
 // ----
 
-export default function DbCollection<Model>(cursor: TCursor): IDbCollection<Model> {
+export default function dbMethods<Model>(cursor: TCursor): IDbCollection<Model> {
 
   const search = async (filters: object, options = {}) => {
     try {

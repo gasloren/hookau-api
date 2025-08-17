@@ -2,7 +2,6 @@ import type { Application } from 'express';
 import type { MongoClient } from 'mongodb';
 
 import { Database } from '../mongo/database.js';
-import { Methods } from '../methods/methods.js';
 
 // ----
 
@@ -31,7 +30,7 @@ export function attachApiMethods(
 ) {
 
   app.use((req, res, next) => {
-    req.api = Methods(Database(mongoClient.db(process.env.DATABASE)));
+    req.mdb = Database(mongoClient.db(process.env.DATABASE));
     next();
   });
 }

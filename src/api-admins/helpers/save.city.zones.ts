@@ -1,5 +1,5 @@
-import * as Model from '../models/index.js';
-import type { IDatabase } from '../mongo/types.js';
+import type { Zone, Zone_V1 } from '../../_types/models/index.js';
+import type { IDatabase } from '../../mongo/types.js';
 
 // --
 /**
@@ -7,10 +7,10 @@ import type { IDatabase } from '../mongo/types.js';
  * @param db 
  * @returns 
  */
-export async function migrateZones(
+export async function saveCityZones(
   db: IDatabase,
-  city: Model.CityCode,
-  zones: Model.Zone_V1[] = []
+  city: string,
+  zones: Zone_V1[] = []
 ): Promise<void> {
   
   console.log(city, zones.length);
@@ -29,13 +29,13 @@ export async function migrateZones(
 
 async function insertZone(
   db: IDatabase,
-  city: Model.CityCode,
-  zoneV1?: Model.Zone_V1
+  city: string,
+  zoneV1?: Zone_V1
 ) {
 
   if (!zoneV1?.code) return;
 
-  const item: Model.Zone = {
+  const item: Zone = {
     _id: `${city}-${zoneV1?.code}`,
     city: city,
     code: zoneV1.code,

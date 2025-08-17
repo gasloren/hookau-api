@@ -1,13 +1,12 @@
-import type { CityCode } from './shared.js';
 
-// --
+export type CityStatus = 'published' | 'processing' | 'countdown';
 
 export interface City {
-  _id: CityCode;
+  _id: string;
   name: string;
   offset: number;    // -3 (AR)
-  enabled: boolean;
-  country: "AR";
+  status: CityStatus;
+  initDate?: Date;    // for countdown timing
   logister: string;
   startHour: string;  // "09:00"
   finalHour: string;  // "23:00"  (max value 24:00)
@@ -17,7 +16,7 @@ export interface City {
 
 export interface City_V1 {
   _id: string;
-  id: CityCode;
+  id: string;
   code: string;
   gtm: string;
   name: string;
