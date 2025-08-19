@@ -1,12 +1,13 @@
 import type { Application } from 'express';
 
-import type {
-  TGlobalEndpoints
-} from '../_types/request/common.js';
-
-import { migrateCities } from './admin/migrate.cities.js';
-import { getMinifiedStores } from './buyer/get.minified.stores.js';
 import { appLogger } from './app.logger.js';
+
+// admins api
+import { migrateCities } from './admin/migrate.cities.js';
+
+// buyers api
+import { getMinifiedStores } from './buyer/get.minified.stores.js';
+import { getStoresStatusInfo } from './buyer/get.stores.status.info.js';
 
 // ----
 
@@ -20,5 +21,6 @@ export function apiRoutes(app: Application) {
 
   // buyers api
   getMinifiedStores(app);
+  getStoresStatusInfo(app);
   
 }

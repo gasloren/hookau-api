@@ -1,25 +1,28 @@
 
 import type {
-  Store,
-  StoresStatusTable
+  Store
 } from '../../_types/models/store.js';
+
+import type {
+  GetStoresStatusInfoPayload
+} from '../../_types/request/buyers.api.js';
 
 // --
 
-export function toStoresStatusTable(
+export function toStoresStatusInfo(
   stores: Store[] = []
-): StoresStatusTable {
+): GetStoresStatusInfoPayload {
 
-  const statusTable: StoresStatusTable = {};
+  const statusInfo: GetStoresStatusInfoPayload = {};
 
   stores?.forEach(({ _id: storeId, status = {} }) => {
-    statusTable[storeId] = {
+    statusInfo[storeId] = {
       activeStr: status.active ? 'true' : 'false',
       unseenStr: status.unseen?.join(',') || '',
       delayTime: status.delay || ''
     };
   });
 
-  return statusTable;
+  return statusInfo;
 
 }

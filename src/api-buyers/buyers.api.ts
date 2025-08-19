@@ -2,6 +2,7 @@ import type { IBuyersApi } from '../_types/request/buyers.api.js';
 import type { IDatabase } from '../mongo/types.js';
 
 import { getMinifiedStores } from './get.minified.stores.js';
+import { getStoresStatusInfo } from './get.stores.status.info.js';
 
 // --
 
@@ -10,7 +11,8 @@ export function buyersApi(
 ): IBuyersApi {
 
   return {
-    getMinifiedStores: getMinifiedStores(mdb)
+    getMinifiedStores: getMinifiedStores(mdb),
+    getStoresStatusInfo: getStoresStatusInfo(mdb)
   };
 
 }

@@ -91,14 +91,11 @@ export interface StoreMinified {
 // --
 
 // astatus table for frontend status refresh
-export type StoresStatusTable = {
-  [ storeId: string ]: {
-    activeStr: 'true' | 'false';
-    unseenStr: string;
-    delayTime: string;
-  }
+export type StoreStatusInfo = {
+  activeStr: 'true' | 'false';
+  unseenStr: string;
+  delayTime: string;
 }
-
 
 export type StorePromotedData = {
   id: string;
