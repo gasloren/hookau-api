@@ -24,6 +24,12 @@ export function migrateCities(
       }
     });
 
+    if (!cities_v1?.length) {
+      return {
+        warning: 'No se econtraron ciudades a migrar'
+      };
+    }
+
     let count = 0;
   
     for (let i=0; i < cities_v1.length; i++) {
@@ -52,11 +58,10 @@ export function migrateCities(
     
     console.log({ removedCities })
 
-    
-    return [
-      null,
-      await mdb.cities.search({})
-    ];
+    return {
+      message: `${count} cities migrated from v1.0 -> v3.0`,
+      payload: await mdb.cities.search({})
+    };
     
   }
 

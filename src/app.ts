@@ -7,7 +7,7 @@ import dbConnect from './mongo/db.connect.js';
 import { getDirname } from './utils.js';
 import {
   checkApiCommKey,
-  attachApiMethods,
+  attachDatabase,
   notFoundHandler
 } from './middlewares/middlewares.js';
 import { apiRoutes } from './routes/api.routes.js';
@@ -48,7 +48,9 @@ export default async function serverApp({
 
   // custom middlewares
   checkApiCommKey(app); // req.headers['x-api-comm-key']
-  attachApiMethods(app, mongoClient); // req.api = methods
+  
+  // attaching req.mdb = database
+  attachDatabase(app, mongoClient); // req.api = methods
 
   // all api routes
   apiRoutes(app);

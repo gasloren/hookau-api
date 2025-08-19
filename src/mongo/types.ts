@@ -3,7 +3,8 @@ import type {
   Zone,
   Store,
   City_V1,
-  ApiLogs
+  ApiLogs,
+  AppLogs
 } from '../_types/models/index.js';
 
 // ----------
@@ -33,6 +34,7 @@ export interface IDatabase {
   zones: DbMethods<Zone>;
   stores: DbMethods<Store>;
   apiLogs: DbMethods<ApiLogs>;
+  appLogs: DbMethods<AppLogs>;
   v1: {
     cities: DbMethods<City_V1>;
   }

@@ -13,4 +13,12 @@ export interface HeadersApi {
   'X-Hookau-Session-Token'?: string;
 }
 
-export type ApiResponse<Payload> = [ string | null, Payload | null ];
+export type ApiResponse<Payload> = {
+  warning?: string;
+  message?: string;
+  payload?: Payload;
+  redirect?: string;
+  rejected?: boolean; // if rejected remove auth token cookie
+};
+
+export type TGlobalEndpoints = '/app-logs';

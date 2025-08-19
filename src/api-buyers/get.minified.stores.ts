@@ -1,6 +1,10 @@
 import type { IDatabase } from '../mongo/types.js';
 
 import type {
+  StoreMinified
+} from '../_types/models/store.js';
+
+import type {
   GetModifiedStores
 } from '../_types/request/buyers.api.js';
 
@@ -34,9 +38,9 @@ export function getMinifiedStores(
       }
     });
 
-    const minified = toMinifiedStores(stores);
-
-    return [ null, minified ];
+    return {
+      payload: toMinifiedStores(stores) || []
+    };
 
   }
 

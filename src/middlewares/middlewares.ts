@@ -13,7 +13,10 @@ export function checkApiCommKey(
     const apiKey = req.headers['x-api-comm-key'] || '???';
     if (apiKey !== process.env.API_COMM_KEY) {
       res.status(401).json({
-        message: 'Not authorized'
+        message: 'Not authorized',
+        warning: 'Not authorized',
+        redirect: '/',
+        rejected: true
       });
       return;
     }
@@ -24,7 +27,7 @@ export function checkApiCommKey(
 
 // ----
 
-export function attachApiMethods(
+export function attachDatabase(
   app: Application,
   mongoClient: MongoClient
 ) {

@@ -6,6 +6,7 @@ import type {
 
 import { adminsApi } from '../../api-admins/admins.api.js';
 import { apiLogger } from '../../handlers/api.logger.js';
+import { OOPS } from '../constants.js';
 
 // ---
 
@@ -17,13 +18,23 @@ export function migrateCities(app: Application) {
     req: Request,
     res: Response
   ) => {
+
     try {
+
       const result = await adminsApi(req.mdb).migrateCities();
-      const statusCode = !result?.[1] ? 202 : 200;
-      res.status(statusCode).json(result);
+
+      res.status(201).json(result);
+
     } catch(error) {
-      await apiLogger(req.mdb, path, error);
+
+      await apiLogger(req.mdb, path, error?.toString());
+      
+      res.status(500).json({
+        warning: OOPS
+      });
+
     }
+    
   });
 
 }
