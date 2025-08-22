@@ -1,6 +1,6 @@
 
 // --
 
-export interface IBuyer {
+export interface Buyer {
   name: string;
 }

@@ -1,6 +1,6 @@
-import type { City, City_V1 } from '../_types/models/index.js';
-import type { IMigrateCities } from '../_types/request/admins.api.js';
-import type { IDatabase } from '../mongo/types.js';
+
+import type { T } from '../../_types/index.js';
+import type { IDatabase } from '../../mongo/types.js';
 
 import { saveCityZones } from './helpers/save.city.zones.js';
 
@@ -12,7 +12,7 @@ import { saveCityZones } from './helpers/save.city.zones.js';
  */
 export function migrateCities(
   mdb: IDatabase
-): IMigrateCities {
+): T.Api.Admin.MigrateCities {
 
   return async () => {
 
@@ -36,7 +36,7 @@ export function migrateCities(
   
       console.log('')
   
-      const city_v1 = cities_v1[i] as City_V1;
+      const city_v1 = cities_v1[i] as T.Model.City_V1;
       console.log(`** ${city_v1.id} **`)
   
       // creamos una colleccion con las zonas
@@ -71,12 +71,12 @@ export function migrateCities(
 
 async function insertCity(
   db: IDatabase,
-  cityV1: City_V1
+  cityV1: T.Model.City_V1
 ) {
 
   if (!cityV1.id) return;
 
-  const data: City = {
+  const data: T.Model.City = {
     _id: cityV1.id,
     name: cityV1.name,
     offset: Number(cityV1.gtm || '-3'),

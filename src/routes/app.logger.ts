@@ -1,9 +1,6 @@
-import type { Application } from 'express';
 
-import type {
-  ApiResponse,
-  TGlobalEndpoints
-} from '../_types/request/common.js';
+import type { Application, Request, Response } from 'express';
+import type { T } from '../_types/index.js';
 
 import { apiLogger } from '../handlers/api.logger.js';
 import { OOPS } from './constants.js';
@@ -12,15 +9,15 @@ import { OOPS } from './constants.js';
 
 export function appLogger(app: Application) {
 
-  const path: TGlobalEndpoints = '/app-logs';
+  const path: T.Api.Shared.Endpoint = '/app-logs';
 
-  app.post(path, async (req, res) => {
+  app.post(path, async (req: Request, res: Response) => {
 
     try {
 
       console.log('app logs')
       console.log(req.query)
-      const insertedId = await req.mdb.appLogs.insert({
+      const insertedId = await req.mongodb.appLogs.insert({
         ...req.body,
         dated: new Date().toISOString()
       });
@@ -36,7 +33,8 @@ export function appLogger(app: Application) {
 
     } catch(error) {
 
-      await apiLogger(req.mdb, path, error);
+      // this is api logger
+      await apiLogger(req.mongodb, path, error);
       res.status(500).json([ OOPS, null ]);
 
     }

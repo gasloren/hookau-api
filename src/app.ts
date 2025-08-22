@@ -2,13 +2,15 @@ import express from 'express';
 import path from 'path';
 import cors from 'cors';
 
-import dbConnect from './mongo/db.connect.js';
+import { mongoConnect } from './mongo/mongo.connect.js';
+import { redisConnect } from './redis/redis.connect.js';
 
 import { getDirname } from './utils.js';
 import {
   checkApiCommKey,
-  attachDatabase,
-  notFoundHandler
+  notFoundHandler,
+  attachUserSession,
+  attachApiController
 } from './middlewares/middlewares.js';
 import { apiRoutes } from './routes/api.routes.js';
 import { gracefulShutdown } from './handlers/shut.down.js';
@@ -40,7 +42,8 @@ export default async function serverApp({
   // const redisCtl = RedisCtl(redisClient);
 
   // If error it will exit server
-  const mongoClient = await dbConnect(); // MongoDB client instance
+  const mongoClient = await mongoConnect(); // MongoDB client instance
+  const redisClient = await redisConnect(); // RedisDB client instance
 
   app.use(cors());
   app.use(express.json({ limit: '10mb' })); // <-- for base64 images
@@ -49,8 +52,11 @@ export default async function serverApp({
   // custom middlewares
   checkApiCommKey(app); // req.headers['x-api-comm-key']
   
-  // attaching req.mdb = database
-  attachDatabase(app, mongoClient); // req.api = methods
+  // attaching api cobtroller
+  attachApiController(app, mongoClient, redisClient);
+
+  // after attaching redis
+  attachUserSession(app);
 
   // all api routes
   apiRoutes(app);
@@ -67,14 +73,20 @@ export default async function serverApp({
     }
   });
 
+  const handleShutDown = () => gracefulShutdown({
+    server,
+    mongo: mongoClient,
+    redis: redisClient
+  });
+
   // Listen for termination signals
-  process.on('SIGTERM', () => gracefulShutdown(server, mongoClient));
-  process.on('SIGINT', () => gracefulShutdown(server, mongoClient));
+  process.on('SIGTERM', handleShutDown);
+  process.on('SIGINT', handleShutDown);
 
   // Listen for MongoDB disconnect
   if (mongoClient) {
     // Trigger shutdown on disconnect
-    mongoClient.on('topologyClosed', () => gracefulShutdown(server, mongoClient));
+    mongoClient.on('topologyClosed', handleShutDown);
   }
 
 }

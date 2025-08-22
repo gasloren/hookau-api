@@ -1,16 +1,12 @@
 
-import type { Menue } from '../../_types/models/menue.js';
-import type {
-  Store,
-  StoreMinified
-} from '../../_types/models/store.js';
+import type { T } from '../../../_types/index.js';
 
 // --
 
 function eliminarAcentos(
   text = ''
 ) {
-  const sinAcento: { [k: string]: string } = {
+  const sinAcento: { [ k: string ]: string } = {
     'á': 'a',
     'é': 'e',
     'í': 'i',
@@ -35,7 +31,7 @@ function eliminarAcentos(
 function extractKeywordsText({
   categories = [],
   products = {}
-}: Menue) {
+}: T.Model.Menue) {
   let text = '';
   categories?.forEach(({ id, name }) => {
     text += `,${name.trim()}`;
@@ -49,10 +45,10 @@ function extractKeywordsText({
 // -------------------------------------------
 
 export function toMinifiedStores(
-  stores: Store[] = []
-): StoreMinified[] {
+  stores: T.Model.Store[] = []
+): T.Model.StoreMinified[] {
 
-  const list: StoreMinified[] = [];
+  const list: T.Model.StoreMinified[] = [];
 
   let keyw = '';
   let prom = '';

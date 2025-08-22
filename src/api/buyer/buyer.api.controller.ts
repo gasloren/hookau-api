@@ -1,14 +1,14 @@
-import type { IBuyersApi } from '../_types/request/buyers.api.js';
-import type { IDatabase } from '../mongo/types.js';
+import type { T } from '../../_types/index.js';
+import type { IDatabase } from '../../mongo/types.js';
 
 import { getMinifiedStores } from './get.minified.stores.js';
 import { getStoresStatusInfo } from './get.stores.status.info.js';
 
 // --
 
-export function buyersApi(
+export function buyerApiController(
   mdb: IDatabase
-): IBuyersApi {
+): T.Api.Buyer.Controller {
 
   return {
     getMinifiedStores: getMinifiedStores(mdb),

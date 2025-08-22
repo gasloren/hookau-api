@@ -1,14 +1,14 @@
 
 // response types
-import type { ApiResponse } from './common.js';
+import type { ApiResponse } from './shared.js';
 
 // models types
 import type { City } from '../models/index.js';
 
 // ---
 
-export type TAdminsEndpoint = 
-  '/admins-api/migrate-cities';
+export type Endpoint = 
+  '/admin-api/migrate-cities';
 
 // ---
 
@@ -16,14 +16,14 @@ export type MigrateCitiesPayload = City[];
 
 export type MigrateCitiesResponse = ApiResponse<MigrateCitiesPayload>;
 
-export type IMigrateCities = () => Promise<MigrateCitiesResponse>;
+export type MigrateCities = () => Promise<MigrateCitiesResponse>;
 
 // ---
 // Interface for implements StoresApi
-export interface IAdminsApi {
+export interface Controller {
 
   // get stores minified list 
-  migrateCities: IMigrateCities;
+  migrateCities: MigrateCities;
   
 
 }

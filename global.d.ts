@@ -1,8 +1,6 @@
-// import { Auth, Session, Shared } from './types/models';
-// import { IDatabase } from './src/database/types';
-// import { IRedisCtl } from './src/controllers/redis-db/types';
-
 import type { IDatabase } from './src/mongo/types.ts';
+import type { IRedisDB } from './src/redis/types.ts';
+import type { T } from './src/_types/index.ts';
 
 // -----
 
@@ -11,12 +9,10 @@ export {}
 declare global {
   namespace Express {
     export interface Request {
-      mdb: IDatabase;
-      // redisCtl: IRedisCtl;
-      // database: IDatabase;
-      // appName?: Shared.AppName;
-      // appCity?: string;
-      // session?: Session.Model;
+      mongodb: IDatabase;
+      redisdb: IRedisDB;
+      apiCtrl: T.Api.Controller;
+      session?: T.Api.Shared.UserSession;
     }
   }
 }

@@ -1,22 +1,12 @@
-
-import type {
-  Menue,
-  MenueOptions,
-  MenuePicker,
-  MenuePickers,
-  MenueProduct,
-  FormattedPicker,
-  FormattedProduct,
-  FormattedMenue
-} from '../../_types/models/index.js';
+import type { T } from '../../../_types/index.js';
 
 // -------------------------------------------
 
 function pickersToList(
-  pickers: MenuePicker[] = [],
-  options: MenueOptions = {}
-): FormattedPicker[] {
-  const picksList: FormattedPicker[] = [];
+  pickers: T.Model.MenuePicker[] = [],
+  options: T.Model.MenueOptions = {}
+): T.Model.FormattedPicker[] {
+  const picksList: T.Model.FormattedPicker[] = [];
   if (!pickers?.length) return [];
   pickers?.forEach((pick) => {
     picksList.push({
@@ -28,13 +18,13 @@ function pickersToList(
 }
 
 function productsToList(
-  products: MenueProduct[] = [],
-  pickers: MenuePickers = {},
-  options: MenueOptions = {},
+  products: T.Model.MenueProduct[] = [],
+  pickers: T.Model.MenuePickers = {},
+  options: T.Model.MenueOptions = {},
   promoted = 0
-): FormattedProduct[] {
+): T.Model.FormattedProduct[] {
   if (!products?.length) return [];
-  const prodsList: FormattedProduct[] = [];
+  const prodsList: T.Model.FormattedProduct[] = [];
   let promo = 0;
   products?.forEach((prod) => {
     if (!prod.editing) {
@@ -54,8 +44,8 @@ function productsToList(
 }
 
 export function toFormattedMenue(
-  storeMenu: Menue
-): FormattedMenue {
+  storeMenu: T.Model.Menue
+): T.Model.FormattedMenue {
   const {
     promoted = 0,
     categories = [],
@@ -63,7 +53,7 @@ export function toFormattedMenue(
     pickers = {},
     options = {}
   } = storeMenu;
-  const menue: FormattedMenue = [];
+  const menue: T.Model.FormattedMenue = [];
   if (!categories?.length) return menue;
   categories?.forEach(catg => {
     if (!catg.editing) {

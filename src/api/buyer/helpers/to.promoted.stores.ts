@@ -1,12 +1,5 @@
 
-import type {
-  Store,
-  StorePromotedData
-} from '../../_types/models/store.js';
-
-import type {
-  FormattedProduct
-} from '../../_types/models/menue.js';
+import type { T } from '../../../_types/index.js';
 
 import {
   toFormattedMenue
@@ -15,17 +8,17 @@ import {
 // --
 
 export function toPromotedStores(
-  stores: Store[]
-): StorePromotedData[] {
+  stores: T.Model.Store[]
+): T.Model.StorePromotedData[] {
 
   if (!stores) return []; // loading
 
-  const promotedStores: StorePromotedData[] = [];
+  const promotedStores: T.Model.StorePromotedData[] = [];
 
   stores?.forEach(({ _id: storeId, data, menue }) => {
 
     const formmattedMenue = toFormattedMenue(menue || []);
-    const promoProducts: FormattedProduct[] = [];
+    const promoProducts: T.Model.FormattedProduct[] = [];
 
     formmattedMenue?.forEach(({ products = [] }) => {
       products?.forEach((product) => {

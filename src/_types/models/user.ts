@@ -1,7 +1,7 @@
 
 // --
 
-export interface IUser {
+export interface User {
   name: string;
 }
 

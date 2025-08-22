@@ -1,6 +1,6 @@
 
 // response types
-import type { ApiResponse } from './common.js';
+import type { ApiResponse } from './shared.js';
 
 // models types
 import type {
@@ -10,9 +10,9 @@ import type {
 
 // ---
 
-export type TBuyersEndpoint =
-  '/buyers-api/get-minified-stores' |
-  '/buyers-api/get-stores-status-info';
+export type Endpoint =
+  '/buyer-api/get-minified-stores' |
+  '/buyer-api/get-stores-status-info';
 
 // ---
 
@@ -46,15 +46,11 @@ export type GetStoresStatusInfo = (
 
 // ---
 // Interface for implements StoresApi
-export interface IBuyersApi {
+export interface Controller {
 
   // get stores minified list 
   getMinifiedStores: GetMinifiedStores;
 
   getStoresStatusInfo: GetStoresStatusInfo;
   
-
 }
-
-
-

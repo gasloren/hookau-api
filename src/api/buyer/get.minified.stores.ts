@@ -1,12 +1,9 @@
-import type { IDatabase } from '../mongo/types.js';
-
-import type {
-  GetStoresStatusInfo
-} from '../_types/request/buyers.api.js';
+import type { T } from '../../_types/index.js';
+import type { IDatabase } from '../../mongo/types.js';
 
 import {
-  toStoresStatusInfo
-} from './helpers/to.stores.status.info.js'
+  toMinifiedStores
+} from './helpers/to.minified.stores.js';
 
 // --
 /**
@@ -14,9 +11,9 @@ import {
  * @param db 
  * @returns 
  */
-export function getStoresStatusInfo(
+export function getMinifiedStores(
   mdb: IDatabase
-): GetStoresStatusInfo {
+): T.Api.Buyer.GetMinifiedStores {
   
   return async (params) => {
 
@@ -35,7 +32,7 @@ export function getStoresStatusInfo(
     });
 
     return {
-      payload: toStoresStatusInfo(stores) || []
+      payload: toMinifiedStores(stores) || []
     };
 
   }

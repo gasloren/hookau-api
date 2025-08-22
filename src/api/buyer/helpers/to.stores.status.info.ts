@@ -1,19 +1,13 @@
 
-import type {
-  Store
-} from '../../_types/models/store.js';
-
-import type {
-  GetStoresStatusInfoPayload
-} from '../../_types/request/buyers.api.js';
+import type { T } from '../../../_types/index.js';
 
 // --
 
 export function toStoresStatusInfo(
-  stores: Store[] = []
-): GetStoresStatusInfoPayload {
+  stores: T.Model.Store[] = []
+): T.Api.Buyer.GetStoresStatusInfoPayload {
 
-  const statusInfo: GetStoresStatusInfoPayload = {};
+  const statusInfo: T.Api.Buyer.GetStoresStatusInfoPayload = {};
 
   stores?.forEach(({ _id: storeId, status = {} }) => {
     statusInfo[storeId] = {

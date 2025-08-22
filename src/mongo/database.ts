@@ -5,16 +5,16 @@ import type { IDatabase } from './types.js';
 
 // --
 
-export function Database(mdb: Db): IDatabase {
+export function Database(mongo: Db): IDatabase {
 
   return {
-    cities: dbMethods(mdb.collection('cities')),
-    zones: dbMethods(mdb.collection('zones')),
-    stores: dbMethods(mdb.collection('stores')),
-    apiLogs: dbMethods(mdb.collection('api_logs')),
-    appLogs: dbMethods(mdb.collection('app_logs')),
+    cities: dbMethods(mongo.collection('cities')),
+    zones: dbMethods(mongo.collection('zones')),
+    stores: dbMethods(mongo.collection('stores')),
+    apiLogs: dbMethods(mongo.collection('api_logs')),
+    appLogs: dbMethods(mongo.collection('app_logs')),
     v1: {
-      cities: dbMethods(mdb.collection('cities'))
+      cities: dbMethods(mongo.collection('cities'))
     }
   };
 
