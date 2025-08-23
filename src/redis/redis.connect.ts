@@ -7,10 +7,10 @@ import type { IRedisDB } from './types.js';
 // Crear cliente
 const redis = createClient({
   socket: {
-    host: '127.0.0.1', // Dirección del servidor Redis
-    port: 6379         // Puerto por defecto
-  },
-  // password: 'tu_password_opcional', // Solo si tu Redis tiene auth
+    host: process.env.REDIS_HOST || '127.0.0.1',  // Dirección del servidor Redis
+    port: Number(process.env.REDIS_PORT) || 6379  // Puerto por defecto
+  }
+  // password: process.env.REDIS_PASS || '', // Solo si tu Redis tiene auth
 });
 
 // Manejo de eventos
