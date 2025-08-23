@@ -3,7 +3,6 @@ import type { Application } from 'express';
 import { appLogger } from './app.logger.js';
 
 // admin api
-import { migrateCities } from './admin/migrate.cities.js';
 
 // buyer api
 import { getMinifiedStores } from './buyer/get.minified.stores.js';
@@ -20,7 +19,6 @@ export function apiRoutes(app: Application) {
   appLogger(app);
 
   // admin api
-  migrateCities(app);
 
   // buyer api
   getMinifiedStores(app);

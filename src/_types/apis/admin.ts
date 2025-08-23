@@ -22,9 +22,6 @@ export type MigrateCities = () => Promise<MigrateCitiesResponse>;
 // Interface for implements StoresApi
 export interface Controller {
 
-  // get stores minified list 
-  migrateCities: MigrateCities;
-  
 
 }
 

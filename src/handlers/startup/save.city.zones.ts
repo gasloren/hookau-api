@@ -1,6 +1,6 @@
 
-import type { T } from '../../../_types/index.js';
-import type { IDatabase } from '../../../mongo/types.js';
+import type { T } from '../../_types/index.js';
+import type { IDatabase } from '../../mongo/types.js';
 
 // --
 /**
