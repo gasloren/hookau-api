@@ -7,18 +7,18 @@ import { OOPS } from '../constants.js';
 
 // ---
 
-export function getStoresStatusInfo(app: Application) {
+export function postSessionVerify(app: Application) {
 
-  const path: T.Api.Buyer.GetStoresStatusInfo.Endpoint = '/buyer-api/get-stores-status-info';
+  const path: T.Api.Session.PostSessionVerify.Endpoint = '/session-api/verify';
 
-  app.get(path, async (
-    req: Request<{}, {}, {}, T.Api.Buyer.GetStoresStatusInfo.Params>,
+  app.post(path, async (
+    req: Request<{}, {}, T.Api.Session.PostSessionVerify.Params, {}>,
     res: Response
   ) => {
 
     try {
 
-      const result = await req.apiCtrl.buyer.getStoresStatusInfo(req.query);
+      const result = await req.apiCtrl.session.postSessionVerify(req.body);
 
       res.status(200).json(result);
 

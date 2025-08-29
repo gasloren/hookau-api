@@ -49,11 +49,14 @@ export function attachUserSession(
 ) {
 
   app.use(async (req, res, next) => {
+    console.log(Date.now(), req.url);
     const token = req.headers['x-session-token'] as string;
+    console.log({ token })
     if (token && req.redisdb) {
-      const jsonUser = await req.redisdb.get(token);
-      if (jsonUser) {
-        req.session = JSON.parse(jsonUser);
+      const tokenData = await req.redisdb.get(token);
+      if (tokenData?.includes(':')) {
+        const [ app, city, email ] = tokenData.split(':');
+        console.log([ app, city, email ])
       }
     }
     next();

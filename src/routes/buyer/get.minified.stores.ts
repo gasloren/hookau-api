@@ -9,10 +9,10 @@ import { OOPS } from '../constants.js';
 
 export function getMinifiedStores(app: Application) {
 
-  const path: T.Api.Buyer.Endpoint = '/buyer-api/get-minified-stores';
+  const path: T.Api.Buyer.GetMinifiedStores.Endpoint = '/buyer-api/get-minified-stores';
 
   app.get(path, async (
-    req: Request<{}, {}, {}, T.Api.Buyer.GetMinifiedStoresParams>,
+    req: Request<{}, {}, {}, T.Api.Buyer.GetMinifiedStores.Params>,
     res: Response
   ) => {
 
@@ -26,9 +26,7 @@ export function getMinifiedStores(app: Application) {
 
       await apiLogger(req.mongodb, path, error?.toString());
 
-      res.status(500).json({
-        warning: OOPS
-      });
+      res.status(500).json(OOPS);
 
     }
   

@@ -13,7 +13,7 @@ import {
  */
 export function getStoresStatusInfo(
   mdb: IDatabase
-): T.Api.Buyer.GetStoresStatusInfo {
+): T.Api.Buyer.GetStoresStatusInfo.Method {
   
   return async (params) => {
 

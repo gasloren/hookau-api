@@ -45,7 +45,8 @@ function extractKeywordsText({
 // -------------------------------------------
 
 export function toMinifiedStores(
-  stores: T.Model.Store[] = []
+  stores: T.Model.Store[] = [],
+  genre = 'all'
 ): T.Model.StoreMinified[] {
 
   const list: T.Model.StoreMinified[] = [];
@@ -63,27 +64,37 @@ export function toMinifiedStores(
     info,
     menue
   }) => {
-    keyw = `${data.brand},${info.products || ''},${info.keywords || ''}`;
-    keyw += extractKeywordsText(menue);
-    prom = menue.promoted > 0 ? `-${menue.promoted}%` : '';
-    if (info.promoted) prom = info.promoted;
-    list.push({
-      _id,
-      city,
-      live: !!status.active,
-      name: data.brand,
-      info: info.products,
-      logo: data.logourl,
-      genr: data.genres || '',
-      othr: data.others || '',
-      addr: data.address,
-      free: !!menue.glutenFree,
-      prom,
-      time: status.delay || '',
-      keyw: keyw.toLowerCase(),
-      test: publication === 'TEST' || published === 'TEST'
-    });
+    if (!genre || genre.toLowerCase() === 'all' ||
+      data.genres.includes(genre) ||
+      data.others.includes(genre)
+    ) {
+      keyw = `${data.brand},${info.products || ''},${info.keywords || ''}`;
+      keyw += extractKeywordsText(menue);
+      prom = menue.promoted > 0 ? `-${menue.promoted}%` : '';
+      if (info.promoted) prom = info.promoted;
+      list.push({
+        _id,
+        city,
+        live: !!status.active,
+        name: data.brand,
+        info: info.products,
+        logo: data.logourl,
+        genr: data.genres || '',
+        othr: data.others || '',
+        addr: data.address,
+        free: !!menue.glutenFree,
+        prom,
+        time: status.delay || '',
+        keyw: keyw.toLowerCase(),
+        test: publication === 'TEST' || published === 'TEST'
+      });
+    }
   });
 
-  return list;
+  if (!genre || genre === 'all') return list;
+
+  const list1 = list.filter(item => (item.genr === genre));
+  const list2 = list.filter(item => (item.othr === genre));
+
+  return [ ...list1, ...list2 ];
 }

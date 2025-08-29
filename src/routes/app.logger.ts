@@ -35,7 +35,7 @@ export function appLogger(app: Application) {
 
       // this is api logger
       await apiLogger(req.mongodb, path, error);
-      res.status(500).json([ OOPS, null ]);
+      res.status(500).json(OOPS);
 
     }
 

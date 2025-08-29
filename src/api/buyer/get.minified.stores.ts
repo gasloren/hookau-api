@@ -13,12 +13,13 @@ import {
  */
 export function getMinifiedStores(
   mdb: IDatabase
-): T.Api.Buyer.GetMinifiedStores {
+): T.Api.Buyer.GetMinifiedStores.Method {
   
   return async (params) => {
 
     const {
-      city
+      city,
+      genre = 'all'
     } = params;
 
     const stores = await mdb.stores.search({
@@ -32,7 +33,7 @@ export function getMinifiedStores(
     });
 
     return {
-      payload: toMinifiedStores(stores) || []
+      payload: toMinifiedStores(stores, genre) || []
     };
 
   }

@@ -10,7 +10,7 @@ import type { IRedisDB } from '../../redis/types.js';
  */
 export function postSessionSignIn(
   rdb: IRedisDB
-): T.Api.Session.PostSessionSignIn {
+): T.Api.Session.PostSessionSignIn.Method {
   
   return async (params) => {
 

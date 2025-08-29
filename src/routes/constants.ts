@@ -1,3 +1,5 @@
 
 
-export const OOPS = 'Algo salió mal';
+export const OOPS = {
+  warning: 'Algo salió mal'
+};

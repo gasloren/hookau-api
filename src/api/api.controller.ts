@@ -14,7 +14,7 @@ export function ApiController(
 
   return {
     buyer: buyerApiController(mdb),
-    session: sessionApiController(rdb)
+    session: sessionApiController(mdb, rdb)
   };
 
 }

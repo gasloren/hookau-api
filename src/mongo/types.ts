@@ -1,10 +1,14 @@
+
 import type {
+  User,
   City,
   Zone,
+  Rider,
   Store,
   City_V1,
   ApiLogs,
-  AppLogs
+  AppLogs,
+  User_V1
 } from '../_types/models/index.js';
 
 // ----------
@@ -30,12 +34,15 @@ export type TCollName =
   'users';
 
 export interface IDatabase {
+  users: DbMethods<User>;
   cities: DbMethods<City>;
   zones: DbMethods<Zone>;
+  riders: DbMethods<Rider>;
   stores: DbMethods<Store>;
   apiLogs: DbMethods<ApiLogs>;
   appLogs: DbMethods<AppLogs>;
   v1: {
+    users: DbMethods<User_V1>;
     cities: DbMethods<City_V1>;
   }
 }

@@ -8,6 +8,8 @@ import { appLogger } from './app.logger.js';
 import { getMinifiedStores } from './buyer/get.minified.stores.js';
 import { getStoresStatusInfo } from './buyer/get.stores.status.info.js';
 import { userSession } from './user.session.js';
+import { postSessionSignUp } from './session/post.session.signup.js';
+import { postSessionVerify } from './session/post.session.verify.js';
 
 // ----
 
@@ -18,7 +20,9 @@ export function apiRoutes(app: Application) {
   // frontend errors logger
   appLogger(app);
 
-  // admin api
+  // session api
+  postSessionSignUp(app);
+  postSessionVerify(app);
 
   // buyer api
   getMinifiedStores(app);
