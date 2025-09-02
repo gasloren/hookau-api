@@ -10,6 +10,7 @@ import { getStoresStatusInfo } from './buyer/get.stores.status.info.js';
 import { userSession } from './user.session.js';
 import { postSessionSignUp } from './session/post.session.signup.js';
 import { postSessionVerify } from './session/post.session.verify.js';
+import { getStoresPromos } from './buyer/get.stores.promos.js';
 
 // ----
 
@@ -27,5 +28,6 @@ export function apiRoutes(app: Application) {
   // buyer api
   getMinifiedStores(app);
   getStoresStatusInfo(app);
+  getStoresPromos(app);
   
 }

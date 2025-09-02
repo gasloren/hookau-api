@@ -97,11 +97,10 @@ export type StoreStatusInfo = {
   delayTime: string;
 }
 
-export type StorePromotedData = {
+export type StorePromos = {
   id: string;
   name: string;
+  logo: string;
   promos: FormattedProduct[];
-  promoted: number;
-  quantity: number;
 }
 
