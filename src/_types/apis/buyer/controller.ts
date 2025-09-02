@@ -1,7 +1,8 @@
 import type {
   GetMinifiedStores,
   GetStoresStatusInfo,
-  GetStoresPromos
+  GetStoresPromos,
+  GetStoreItem
 } from './index.js';
 
 // --
@@ -15,5 +16,7 @@ export interface Controller {
   getStoresStatusInfo: GetStoresStatusInfo.Method;
 
   getStoresPromos: GetStoresPromos.Method;
+
+  getStoreItem: GetStoreItem.Method;
   
 }
