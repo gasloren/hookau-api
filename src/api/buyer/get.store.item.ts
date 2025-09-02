@@ -13,6 +13,8 @@ export function getStoreItem(
   
   return async (params) => {
 
+    console.log('***', params);
+
     const {
       city,
       storeId
@@ -20,7 +22,7 @@ export function getStoreItem(
 
     const store = await mdb.stores.getOne({
       city,
-      storeId
+      _id: storeId
     });
 
     if (store?._id) {

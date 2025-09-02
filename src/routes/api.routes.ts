@@ -11,6 +11,7 @@ import { userSession } from './user.session.js';
 import { postSessionSignUp } from './session/post.session.signup.js';
 import { postSessionVerify } from './session/post.session.verify.js';
 import { getStoresPromos } from './buyer/get.stores.promos.js';
+import { getStoreItem } from './buyer/get.store.item.js';
 
 // ----
 
@@ -29,5 +30,6 @@ export function apiRoutes(app: Application) {
   getMinifiedStores(app);
   getStoresStatusInfo(app);
   getStoresPromos(app);
+  getStoreItem(app);
   
 }
