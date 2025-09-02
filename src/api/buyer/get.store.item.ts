@@ -13,8 +13,6 @@ export function getStoreItem(
   
   return async (params) => {
 
-    console.log('***', params);
-
     const {
       city,
       storeId
