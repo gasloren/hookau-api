@@ -1,14 +1,18 @@
 
 import type {
-  User,
+  Auth,
   City,
   Zone,
+  Buyer,
   Rider,
   Store,
+  Order,
   City_V1,
   ApiLogs,
   AppLogs,
-  User_V1
+  User_V1,
+  Client,
+  Credential
 } from '../_types/models/index.js';
 
 // ----------
@@ -26,23 +30,20 @@ export interface DbMethods<Model> {
 
 // ----
 
-export type TCollName = 
-  'cities' |
-  'stores' |
-  'buyers' |
-  'drivers' |
-  'users';
-
 export interface IDatabase {
-  users: DbMethods<User>;
+  auth: DbMethods<Auth>;
   cities: DbMethods<City>;
   zones: DbMethods<Zone>;
+  buyers: DbMethods<Buyer>;
   riders: DbMethods<Rider>;
   stores: DbMethods<Store>;
+  orders: DbMethods<Order>;
   apiLogs: DbMethods<ApiLogs>;
   appLogs: DbMethods<AppLogs>;
+  credentials: DbMethods<Credential>;
   v1: {
     users: DbMethods<User_V1>;
     cities: DbMethods<City_V1>;
+    clients: DbMethods<Client>;
   }
 }

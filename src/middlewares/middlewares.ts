@@ -34,34 +34,15 @@ export function attachApiController(
   mongoClient: MongoClient,
   redisClient: IRedisDB
 ) {
-  app.use((req, res, next) => {
+  app.use(async (req, res, next) => {
     req.mongodb = Database(mongoClient.db(process.env.DATABASE));
     req.redisdb = redisClient;
-    req.apiCtrl = ApiController(req.mongodb, req.redisdb);
-    next();
-  });
-}
-
-// ----
-
-export function attachUserSession(
-  app: Application
-) {
-
-  app.use(async (req, res, next) => {
-    console.log(Date.now(), req.url);
     const token = req.headers['x-session-token'] as string;
-    console.log({ token })
-    if (token && req.redisdb) {
-      const tokenData = await req.redisdb.get(token);
-      if (tokenData?.includes(':')) {
-        const [ app, city, email ] = tokenData.split(':');
-        console.log([ app, city, email ])
-      }
-    }
+    const email = await req.redisdb.get(token);
+    if (email) req.userEmail = email;
+    req.apiCtrl = ApiController(req);
     next();
   });
-
 }
 
 // ----

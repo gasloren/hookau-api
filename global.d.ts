@@ -12,7 +12,7 @@ declare global {
       mongodb: IDatabase;
       redisdb: IRedisDB;
       apiCtrl: T.Api.Controller;
-      session?: T.Api.Shared.UserSession;
+      userEmail: string | null;
     }
   }
 }

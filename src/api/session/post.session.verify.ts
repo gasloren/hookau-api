@@ -1,7 +1,10 @@
 
 import type { T } from '../../_types/index.js';
+import type { IDatabase } from '../../mongo/types.js';
 import type { IRedisDB } from '../../redis/types.js';
+
 import { randomId } from '../../utils.js';
+import { migrateClientToBuyer } from './migrate.client.to.buyer.js';
 
 // --
 /**
@@ -10,6 +13,7 @@ import { randomId } from '../../utils.js';
  * @returns 
  */
 export function postSessionVerify(
+  mdb: IDatabase,
   rdb: IRedisDB
 ): T.Api.Session.PostSessionVerify.Method {
   
@@ -22,9 +26,7 @@ export function postSessionVerify(
       vcode
     } = params;
 
-    const redisKey = `${app}:${city}:${email}`;
-
-    const storedCode = await rdb.get(redisKey);
+    const storedCode = await rdb.get(email);
 
     if (!storedCode || vcode !== storedCode) {
       return {
@@ -36,25 +38,37 @@ export function postSessionVerify(
     // generate new token
     const token = randomId('', 32); // leave in 32
 
-    // 30 dias
-    const expSeconds = 60 * 60 * 24 * 30;
+    // 90 dias
+    const expSeconds = 60 * 60 * 24 * 90;
 
-    await rdb.set(token, redisKey, { EX: expSeconds });
-    // await rdb.set(`${email}-token`, token, { EX: expSeconds });
+    await rdb.set(token, email, { EX: expSeconds });
+
+    const auth = await mdb.auth.getOne({
+      email
+    });
+    
+    // buyer no necesita el allow
+    if (!auth) {
+      await mdb.auth.insert({ email, allow: {} });
+      await migrateClientToBuyer(mdb, email); // if buyer not exists
+    }
+
+    const hasAuth = app === 'buyer' ||
+      !!auth?.allow?.[app]?.includes(city);
   
     return {
       success: true,
       token: {
         name: 'autk',
         value: token,
-        path: `/${app}/${city}`,
+        path: '/',
         httpOnly: true,
         secure: process.env.NODE_ENV === 'production',
         sameSite: 'strict',
         maxAge: expSeconds,
         priority: 'high'
       },
-      redirect: `/${app}/${city}`,
+      redirect: hasAuth ? `/${app}/${city}` : `/${app}/${city}/rejected`,
       payload: {
         app,
         city,

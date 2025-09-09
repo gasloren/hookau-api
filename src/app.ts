@@ -9,7 +9,6 @@ import { getDirname } from './utils.js';
 import {
   checkApiCommKey,
   notFoundHandler,
-  attachUserSession,
   attachApiController
 } from './middlewares/middlewares.js';
 import { apiRoutes } from './routes/api.routes.js';
@@ -58,11 +57,8 @@ export default async function serverApp({
   // custom middlewares
   checkApiCommKey(app); // req.headers['x-api-comm-key']
   
-  // attaching api cobtroller
+  // attaching api controller, and userEmail if token exists
   attachApiController(app, mongoClient, redisClient);
-
-  // after attaching redis
-  attachUserSession(app);
 
   // all api routes
   apiRoutes(app);

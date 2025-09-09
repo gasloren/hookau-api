@@ -12,7 +12,6 @@ export type App =
 export type UserSession = {
   app: App;
   city: string;
-  token: string;
   email: string;
   userId: string;
 }

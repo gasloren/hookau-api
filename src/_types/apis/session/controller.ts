@@ -1,5 +1,4 @@
 import {
-  PostSessionSignIn,
   PostSessionSignUp,
   PostSessionVerify
 } from './index.js';
@@ -11,8 +10,6 @@ export interface Controller {
   postSessionSignUp: PostSessionSignUp.Method;
 
   postSessionVerify: PostSessionVerify.Method;
-
-  postSessionSignIn: PostSessionSignIn.Method;
 
 }
 

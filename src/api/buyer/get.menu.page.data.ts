@@ -1,0 +1,83 @@
+import type { T } from '../../_types/index.js';
+import type { IDatabase } from '../../mongo/types.js';
+import { OOPS } from '../../routes/constants.js';
+import { checkUserAuth } from '../auth.handler.js';
+import { toNewOrderData } from './helpers/to.new.order.data.js';
+import { toStoreStatusInfo } from './helpers/to.stores.status.info.js';
+
+// --
+/**
+ * 
+ * @param db 
+ * @returns 
+ */
+export function getMenuPageData(
+  mdb: IDatabase,
+  userEmail: string | null
+): T.Api.Buyer.GetMenuPageData.Method {
+  
+  return async (params) => {
+
+    const {
+      city,
+      storeId,
+      orderId
+    } = params;
+
+    if (!city || !storeId || !orderId) {
+      return {
+        warning: 'Parametros invalidos'
+      };
+    }
+
+    const hasAuth = await checkUserAuth(mdb, 'buyer', city, userEmail);
+
+    if (!hasAuth) {
+      return {
+        warning: 'Debe iniciar sesión',
+        rejected: true,
+        redirect: `/buyer/${city}/login`
+      };
+    }
+
+    const store = await mdb.stores.getOne({ city, _id: storeId });
+    if (!store) return OOPS;
+
+    // Create a new order
+    if (orderId === 'create') {
+      const buyer = await mdb.buyers.getOne({ email: userEmail });
+      if (!buyer) return OOPS;
+      const credentials = await mdb.credentials.getOne({ storeId });
+      if (!credentials) return OOPS;
+      const newData = toNewOrderData(store, buyer, credentials);
+      const newId = await mdb.orders.insert(newData);
+      const order = await mdb.orders.getOne({ _id: newId, storeId });
+      return {
+        success: !!order?._id,
+        redirect: !order?._id ? '' : `/buyer/${city}/menu/${storeId}/${order?._id}`,
+        payload: {
+          orderItem: order || null,
+          storeName: store.data?.brand || '???',
+          storeLogo: store.data?.logourl || '',
+          statusInfo: toStoreStatusInfo(store.status)
+        }
+      };
+    }
+
+    const order = await mdb.orders.getOne({ _id: orderId, storeId });
+
+    return {
+      success: !!order?._id,
+      payload: {
+        orderItem: order || null,
+        storeName: store.data?.brand || '???',
+        storeLogo: store.data?.logourl || '',
+        statusInfo: toStoreStatusInfo(store.status)
+      }
+    };
+
+  }
+
+}
+
+// --

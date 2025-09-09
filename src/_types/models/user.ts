@@ -1,6 +1,3 @@
-import type { Shared } from '../apis/index.js';
-
-// --
 
 export type UserRoleV1 = 'admin' | 'logister' | 'store' | 'hooker';
 
@@ -86,15 +83,3 @@ export interface HookerV1 extends BasicV1 {
 
 export type User_V1 = AdminV1 | LogisterV1 | StoreV1 | HookerV1;
 
-
-// ---
-
-export interface User {
-  email: string;
-  apps: {
-    [ Property in Shared.App ]: boolean;
-  };
-  cities: {
-    [ city: string ]: boolean;
-  };
-}

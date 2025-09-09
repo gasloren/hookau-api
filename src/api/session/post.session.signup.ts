@@ -1,9 +1,8 @@
 
 import type { T } from '../../_types/index.js';
-import Mailer from '../../mailer/mailer.js';
-import type { IDatabase } from '../../mongo/types.js';
 import type { IRedisDB } from '../../redis/types.js';
-import { isEmailRegistered } from './helpers.js';
+
+import Mailer from '../../mailer/mailer.js';
 
 // --
 /**
@@ -14,7 +13,6 @@ import { isEmailRegistered } from './helpers.js';
  * @returns 
  */
 export function postSessionSignUp(
-  mdb: IDatabase,
   rdb: IRedisDB
 ): T.Api.Session.PostSessionSignUp.Method {
   
@@ -26,27 +24,13 @@ export function postSessionSignUp(
       email
     } = params;
 
-    const emailIsRegistered = await isEmailRegistered(
-      mdb, app, city, email
-    );
-
-    if (app !== 'buyer' && !emailIsRegistered) {
-      console.log('Usuario sin permisos', email);
-      return {
-        warning: 'El email no se encuentra registrado para este tipo de acceso',
-        rejected: true
-      };
-    }
-
     const timestamp = Date.now().toString();
     const l = timestamp.length;
     const vcode = timestamp.slice(l - 6);
 
     const expirationInSeconds = 180; // Key will expire in 180 seconds
 
-    const redisKey = `${app}:${city}:${email}`;
-
-    const redisResp = await rdb.set(redisKey, vcode, {
+    const redisResp = await rdb.set(email, vcode, {
       EX: expirationInSeconds
     });
 
