@@ -17,7 +17,6 @@ export type Endpoint = '/buyer-api/get-menu-page-data';
 export type Params = {
   city: string;
   storeId: string;
-  orderId: 'create' | string;
 }
 
 export type Payload = {

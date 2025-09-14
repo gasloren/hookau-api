@@ -1,5 +1,6 @@
 import type { T } from '../../_types/index.js';
 import type { IDatabase } from '../../mongo/types.js';
+
 import { OOPS } from '../../routes/constants.js';
 import { checkUserAuth } from '../auth.handler.js';
 import { toNewOrderData } from './helpers/to.new.order.data.js';
@@ -20,11 +21,10 @@ export function getMenuPageData(
 
     const {
       city,
-      storeId,
-      orderId
+      storeId
     } = params;
 
-    if (!city || !storeId || !orderId) {
+    if (!city || !storeId) {
       return {
         warning: 'Parametros invalidos'
       };
@@ -43,28 +43,27 @@ export function getMenuPageData(
     const store = await mdb.stores.getOne({ city, _id: storeId });
     if (!store) return OOPS;
 
+    const order = await mdb.orders.getOne({ storeId, process: 0 });
+
     // Create a new order
-    if (orderId === 'create') {
+    if (!order) {
       const buyer = await mdb.buyers.getOne({ email: userEmail });
       if (!buyer) return OOPS;
       const credentials = await mdb.credentials.getOne({ storeId });
       if (!credentials) return OOPS;
       const newData = toNewOrderData(store, buyer, credentials);
       const newId = await mdb.orders.insert(newData);
-      const order = await mdb.orders.getOne({ _id: newId, storeId });
+      const newOrder = await mdb.orders.getOne({ _id: newId, storeId, process: 0 });
       return {
-        success: !!order?._id,
-        redirect: !order?._id ? '' : `/buyer/${city}/menu/${storeId}/${order?._id}`,
+        success: !!newOrder?._id,
         payload: {
-          orderItem: order || null,
+          orderItem: newOrder || null,
           storeName: store.data?.brand || '???',
           storeLogo: store.data?.logourl || '',
           statusInfo: toStoreStatusInfo(store.status)
         }
       };
     }
-
-    const order = await mdb.orders.getOne({ _id: orderId, storeId });
 
     return {
       success: !!order?._id,
