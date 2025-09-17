@@ -18,7 +18,7 @@ import type {
 // --------
 
 interface OptionsData {
-  [ optnId: string ]: MenueOption;
+  [ optnId: string ]: MenueOption & { count: boolean };
 }
 
 interface Picked {
@@ -37,9 +37,12 @@ function extractOptionsData(
   pickers: FormattedPicker[] = []
 ): OptionsData {
   const optsData: OptionsData = {};
-  pickers.forEach(({ options = [] }) => {
+  pickers.forEach(({ counter, options = [] }) => {
     options?.forEach((option) => {
-      optsData[option.id] = cloneObject<MenueOption>(option);
+      optsData[option.id] = {
+        ...cloneObject<MenueOption>(option),
+        count: !!counter
+      };
     });
   });
   return optsData;
@@ -99,10 +102,12 @@ function extractProductItems(
 
 function attachProdItems(
   orderItems: OrderItem[] = [],
-  product: FormattedProduct
+  product: FormattedProduct,
+  catgId: string
 ): ProductWithItems {
   return {
     ...product,
+    catgId,
     items: extractProductItems(orderItems, product.id, product.pickers)
   };
 }
@@ -111,11 +116,12 @@ function attachProdItems(
 
 function toProductsWithItems(
   orderItems: OrderItem[] = [],
-  catgProds: FormattedProduct[] = []
+  catgProds: FormattedProduct[] = [],
+  categoryId: string
 ): ProductWithItems[] {
   const products: ProductWithItems[] = [];
   catgProds.forEach(product => {
-    const prodData = attachProdItems(orderItems, product);
+    const prodData = attachProdItems(orderItems, product, categoryId);
     if (prodData.items.length) products.push(prodData); // solo si tiene items
   });
   return products;
@@ -132,6 +138,7 @@ function adjustmentsToList(
     const charge = adjustments[id]?.amount || 0;
     if (charge) {
       list.push({
+        catgId: 'ADJUSTMENTS',
         id,
         name: 'Ajuste del comercio',
         code: '',
@@ -169,7 +176,7 @@ function toOrderViewerList({
 ): ViewerList {
   const list: ViewerList = [];
   orderMenue.forEach(({ id, name, products = [] }) => {
-    const catgProds = toProductsWithItems(orderItems, products);
+    const catgProds = toProductsWithItems(orderItems, products, id);
     if (catgProds.length) {
       list.push({
         id,
@@ -191,7 +198,8 @@ function toOrderViewerList({
 // --------
 
 function toOrderViewTotals(
-  order: Order,
+  orderMenue: FormattedMenue,
+  orderItems: OrderItem[],
   ignoreAdjustments?: boolean
 ): {
   amount: number;
@@ -203,7 +211,10 @@ function toOrderViewTotals(
   let netAmount = 0;
   let extras = 0;
   let quantity = 0;
-  const list = toOrderViewerList(order, ignoreAdjustments);
+  const list = toOrderViewerList({
+    orderMenue,
+    orderItems
+  }, ignoreAdjustments);
   list.forEach(({ products = [] }) => {
     products.forEach(({ price, charge, items = [] }) => {
       quantity = items.length;

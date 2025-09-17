@@ -134,6 +134,7 @@ export interface Adjustments {
 
 export interface OptionWithUnits extends MenueOption {
   units: number;
+  count: boolean;
 }
 
 export interface ProductItem {
@@ -143,6 +144,7 @@ export interface ProductItem {
 }
 
 export interface ProductWithItems extends FormattedProduct {
+  catgId: string;
   items: ProductItem[];
 }
 
