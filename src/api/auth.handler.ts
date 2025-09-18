@@ -12,6 +12,9 @@ export async function checkUserAuth(
 
   console.log({ email })
 
+  if (!email) return false;
+  if (!email.trim()) return false;
+
   const auth = await mdb.auth.getOne({ email });
 
   console.log({ auth })

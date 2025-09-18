@@ -5,7 +5,8 @@ import type {
   GetStoresPromos,
   GetStoreItem,
   GetFormattedMenue,
-  GetMenuPageData
+  GetMenuPageData,
+  PostMenuOrderItems
 } from './index.js';
 
 // --
@@ -19,4 +20,5 @@ export interface Controller {
   getStoreItem: GetStoreItem.Method;
   getFormattedMenue: GetFormattedMenue.Method;
   getMenuPageData: GetMenuPageData.Method;
+  postMenuOrderItems: PostMenuOrderItems.Method;
 }

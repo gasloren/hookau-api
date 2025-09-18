@@ -40,15 +40,20 @@ export function getMenuPageData(
       };
     }
 
+    const buyer = await mdb.buyers.getOne({ email: userEmail });
+    if (!buyer?._id) return OOPS;
+
     const store = await mdb.stores.getOne({ city, _id: storeId });
     if (!store) return OOPS;
 
-    const order = await mdb.orders.getOne({ storeId, process: 0 });
+    const order = await mdb.orders.getOne({
+      storeId,
+      process: 0,
+      clientId: buyer._id
+    });
 
     // Create a new order
     if (!order) {
-      const buyer = await mdb.buyers.getOne({ email: userEmail });
-      if (!buyer) return OOPS;
       const credentials = await mdb.credentials.getOne({ storeId });
       if (!credentials) return OOPS;
       const newData = toNewOrderData(store, buyer, credentials);

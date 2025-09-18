@@ -15,6 +15,7 @@ import { postSessionVerify } from './session/post.session.verify.js';
 import { getStoresPromos } from './buyer/get.stores.promos.js';
 import { getFormattedMenue } from './buyer/get.formatted.menue.js';
 import { getMenuPageData } from './buyer/get.menu.page.data.js';
+import { postMenuOrderItems } from './buyer/post.menu.order.items.js';
 
 // ----
 
@@ -37,5 +38,6 @@ export function apiRoutes(app: Application) {
   getStoreItem(app);
   getFormattedMenue(app);
   getMenuPageData(app);
+  postMenuOrderItems(app);
   
 }

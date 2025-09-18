@@ -8,6 +8,7 @@ import { getStoresStatusInfo } from './get.stores.status.info.js';
 import { getStoreStatusInfo } from './get.store.status.info.js';
 import { getFormattedMenue } from './get.formatted.menue.js';
 import { getMenuPageData } from './get.menu.page.data.js';
+import { postMenuOrderItems } from './post.menu.order.items.js';
 
 // --
 
@@ -23,7 +24,8 @@ export function buyerApiController(
     getStoresPromos: getStoresPromos(mdb),
     getStoreItem: getStoreItem(mdb),
     getFormattedMenue: getFormattedMenue(mdb),
-    getMenuPageData: getMenuPageData(mdb, userEmail)
+    getMenuPageData: getMenuPageData(mdb, userEmail),
+    postMenuOrderItems: postMenuOrderItems(mdb, userEmail)
   };
 
 }
