@@ -10,6 +10,7 @@ import { getFormattedMenue } from './get.formatted.menue.js';
 import { getMenuPageData } from './get.menu.page.data.js';
 import { postMenuOrderItems } from './post.menu.order.items.js';
 import { getOrderPageData } from './get.order.page.data.js';
+import { getPointsPageData } from './get.points.page.data.js';
 
 // --
 
@@ -27,7 +28,8 @@ export function buyerApiController(
     getFormattedMenue: getFormattedMenue(mdb),
     getMenuPageData: getMenuPageData(mdb, userEmail),
     postMenuOrderItems: postMenuOrderItems(mdb, userEmail),
-    getOrderPageData: getOrderPageData(mdb, userEmail)
+    getOrderPageData: getOrderPageData(mdb, userEmail),
+    getPointsPageData: getPointsPageData(mdb, userEmail)
   };
 
 }

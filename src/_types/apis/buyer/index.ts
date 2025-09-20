@@ -8,6 +8,7 @@ export * as GetFormattedMenue from './get.formatted.menue.js';
 export * as GetMenuPageData from './get.menu.page.data.js';
 export * as PostMenuOrderItems from './post.menu.order.items.js';
 export * as GetOrderPageData from './get.order.page.data.js';
+export * as GetPointsPageData from './get.points.page.data.js';
 
 export * from './controller.js';
 

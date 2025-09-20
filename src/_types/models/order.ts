@@ -26,6 +26,7 @@ export interface Shipping {
   lat: string;
   lng: string;
   name: string;
+  coords: Coords;
 }
 
 export interface Receiver {

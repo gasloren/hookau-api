@@ -17,6 +17,7 @@ import { getFormattedMenue } from './buyer/get.formatted.menue.js';
 import { getMenuPageData } from './buyer/get.menu.page.data.js';
 import { postMenuOrderItems } from './buyer/post.menu.order.items.js';
 import { getOrderPageData } from './buyer/get.order.page.data.js';
+import { getPointsPageData } from './buyer/get.points.page.data.js';
 
 // ----
 
@@ -41,5 +42,6 @@ export function apiRoutes(app: Application) {
   getMenuPageData(app);
   postMenuOrderItems(app);
   getOrderPageData(app);
+  getPointsPageData(app);
   
 }
