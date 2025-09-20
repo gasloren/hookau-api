@@ -9,13 +9,14 @@ import type { Coords } from './shared.js';
 // --
 
 export interface StoreData {
-  address: "Av. San Martin 705",
-  brand: "By the Way - Patagonian Burger",
-  genre: "FAST-FOOD",
-  logourl: "https://res.cloudinary.com/dxz0lfdma/image/upload/v1748209888/stores-logos/cxtuerrsqpf3mzlicc6h.jpg",
-  genres: "01",
-  index: 2,
-  others: ""
+  address: string;
+  brand:string;
+  genre: string;
+  logourl: string;
+  genres: string;
+  index: number;
+  others: string;
+  coords: Coords;
 }
 
 export interface StoreInfo {
@@ -71,7 +72,6 @@ export interface Store {
   data: StoreData;
   info: StoreInfo;
   menue: Menue;
-  coords: Coords;
 }
 
 export interface StoreMinified {

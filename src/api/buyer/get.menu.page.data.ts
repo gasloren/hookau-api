@@ -20,30 +20,33 @@ export function getMenuPageData(
   return async (params) => {
 
     const {
-      city,
+      city: cityId,
       storeId
     } = params;
 
-    if (!city || !storeId) {
+    if (!cityId || !storeId) {
       return {
         warning: 'Parametros invalidos'
       };
     }
 
-    const hasAuth = await checkUserAuth(mdb, 'buyer', city, userEmail);
+    const hasAuth = await checkUserAuth(mdb, 'buyer', cityId, userEmail);
 
     if (!hasAuth) {
       return {
         warning: 'Debe iniciar sesión',
         rejected: true,
-        redirect: `/buyer/${city}/login`
+        redirect: `/buyer/${cityId}/login`
       };
     }
+
+    const city = await mdb.cities.getOne({ _id: cityId });
+    if (!city?._id) return OOPS;
 
     const buyer = await mdb.buyers.getOne({ email: userEmail });
     if (!buyer?._id) return OOPS;
 
-    const store = await mdb.stores.getOne({ city, _id: storeId });
+    const store = await mdb.stores.getOne({ city: cityId, _id: storeId });
     if (!store) return OOPS;
 
     const order = await mdb.orders.getOne({
@@ -56,7 +59,7 @@ export function getMenuPageData(
     if (!order) {
       const credentials = await mdb.credentials.getOne({ storeId });
       if (!credentials) return OOPS;
-      const newData = toNewOrderData(store, buyer, credentials);
+      const newData = toNewOrderData(city, store, buyer, credentials);
       const newId = await mdb.orders.insert(newData);
       const newOrder = await mdb.orders.getOne({ _id: newId, storeId, process: 0 });
       return {

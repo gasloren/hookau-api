@@ -66,7 +66,7 @@ export function getOrderPageData(
         orderData: order || null,
         statusInfo: toStoreStatusInfo(store.status),
         cityCoords: city.coords,
-        storeCoords: store.coords
+        storeCoords: store.data.coords
       }
     };
 

@@ -5,6 +5,7 @@ import { toFormattedMenue } from './to.formatted.menue.js';
 // ---
 
 export function toNewOrderData(
+  city: T.Model.City,
   store: T.Model.Store,
   buyer: T.Model.Buyer,
   credentials: T.Model.Credential
@@ -32,6 +33,8 @@ export function toNewOrderData(
     storeLogo: store.data.logourl,
     storeCity: store.city,
     storeAddr: store.data.address,
+    storeCoords: store.data.coords,
+    cityCoords: city.coords,
     orderMenue: toFormattedMenue(store.menue),
     orderItems: [],
     orderView: [],

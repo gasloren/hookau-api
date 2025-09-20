@@ -1,4 +1,5 @@
 import type { FormattedMenue, FormattedProduct, MenueOption } from './menue.js';
+import type { Coords } from './shared.js';
 
 // --
 
@@ -172,6 +173,8 @@ export interface Order {
   storeLogo: string;
   storeAddr: string;
   storeCity: string;
+  storeCoords: Coords;
+  cityCoords: Coords;
   orderMenue: FormattedMenue;
   orderItems: OrderItem[];
   orderView?: ViewerList;

@@ -22,14 +22,6 @@ export type Params = {
 export type Payload = {
   orderData: Order | null;
   statusInfo: StoreStatusInfo;
-  cityCoords: {
-    lat: number;
-    lng: number;
-  };
-  storeCoords: {
-    lat: number;
-    lng: number;
-  };
 }
 
 export type Method = (
