@@ -3,7 +3,6 @@ import type { IDatabase } from '../../mongo/types.js';
 
 import { OOPS } from '../../routes/constants.js';
 import { checkUserAuth } from '../auth.handler.js';
-import { migrateUserPoints } from './helpers/migrate.user.points.js';
 
 // --
 /**
@@ -45,24 +44,6 @@ export function getPointsPageData(
       _id: cityId
     });
     if (!city) return OOPS;
-
-    // handle migration points from v1
-    if (!buyer.points) {
-      const points = migrateUserPoints(buyer);
-      const updated = await mdb.buyers.update({
-        email: userEmail
-      }, {
-        points
-      });
-      return {
-        success: !!updated,
-        payload: {
-          cityName: city.name,
-          cityCoords: city.coords,
-          userPoints: points
-        }
-      };
-    }
 
     return {
       success: true,

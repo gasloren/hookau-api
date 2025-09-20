@@ -1,4 +1,6 @@
 
+import type { Coords } from './shared.js';
+
 // --
 
 export type Geolocation = {
@@ -7,7 +9,7 @@ export type Geolocation = {
   acc?: string;
 }
 
-export interface Point {
+export interface Point_V1 {
   id: number;
   codigo: string;
   calle: string;
@@ -46,12 +48,26 @@ export interface Client {
   required?: Required;
   loggedAt?: Date;
   geolocation?: Geolocation;
-  point1?: Point | null;
-  point2?: Point | null;
-  point3?: Point | null;
+  point1?: Point_V1 | null;
+  point2?: Point_V1 | null;
+  point3?: Point_V1 | null;
   likeds?: string;
   service?: "email" | "phone";
   updatedAt?: Date;
+}
+
+export interface Point {
+  id: string;
+  calle: string;
+  altura: string;
+  numero: string;
+  barrio: string;
+  ciudad: string;
+  cod_ciudad: string;
+  pais: string;
+  cod_pais: string;
+  coords: Coords;
+  referencia: string;
 }
 
 export interface Points {
