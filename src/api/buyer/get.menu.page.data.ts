@@ -62,9 +62,7 @@ export function getMenuPageData(
       return {
         success: !!newOrder?._id,
         payload: {
-          orderItem: newOrder || null,
-          storeName: store.data?.brand || '???',
-          storeLogo: store.data?.logourl || '',
+          orderData: newOrder || null,
           statusInfo: toStoreStatusInfo(store.status)
         }
       };
@@ -73,9 +71,7 @@ export function getMenuPageData(
     return {
       success: !!order?._id,
       payload: {
-        orderItem: order || null,
-        storeName: store.data?.brand || '???',
-        storeLogo: store.data?.logourl || '',
+        orderData: order || null,
         statusInfo: toStoreStatusInfo(store.status)
       }
     };

@@ -10,18 +10,26 @@ import type {
 
 // ---
 
-export type Endpoint = '/buyer-api/get-menu-page-data';
+export type Endpoint = '/buyer-api/get-order-page-data';
 
 // ---
 
 export type Params = {
   city: string;
-  storeId: string;
+  orderId: string;
 }
 
 export type Payload = {
   orderData: Order | null;
   statusInfo: StoreStatusInfo;
+  cityCoords: {
+    lat: number;
+    lng: number;
+  };
+  storeCoords: {
+    lat: number;
+    lng: number;
+  };
 }
 
 export type Method = (

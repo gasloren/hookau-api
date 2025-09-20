@@ -9,6 +9,7 @@ import { getStoreStatusInfo } from './get.store.status.info.js';
 import { getFormattedMenue } from './get.formatted.menue.js';
 import { getMenuPageData } from './get.menu.page.data.js';
 import { postMenuOrderItems } from './post.menu.order.items.js';
+import { getOrderPageData } from './get.order.page.data.js';
 
 // --
 
@@ -25,7 +26,8 @@ export function buyerApiController(
     getStoreItem: getStoreItem(mdb),
     getFormattedMenue: getFormattedMenue(mdb),
     getMenuPageData: getMenuPageData(mdb, userEmail),
-    postMenuOrderItems: postMenuOrderItems(mdb, userEmail)
+    postMenuOrderItems: postMenuOrderItems(mdb, userEmail),
+    getOrderPageData: getOrderPageData(mdb, userEmail)
   };
 
 }

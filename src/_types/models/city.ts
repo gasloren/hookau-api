@@ -1,3 +1,6 @@
+import type { Coords } from './shared.js';
+
+// ---
 
 export type CityStatus = 'published' | 'processing' | 'countdown';
 
@@ -6,6 +9,7 @@ export interface City {
   name: string;
   offset: number;    // -3 (AR)
   status: CityStatus;
+  coords: Coords;
   initDate?: Date;    // for countdown timing
   logister: string;
   startHour: string;  // "09:00"

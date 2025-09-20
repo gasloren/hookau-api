@@ -4,6 +4,8 @@ import type {
   FormattedProduct
 } from './menue.js';
 
+import type { Coords } from './shared.js';
+
 // --
 
 export interface StoreData {
@@ -69,6 +71,7 @@ export interface Store {
   data: StoreData;
   info: StoreInfo;
   menue: Menue;
+  coords: Coords;
 }
 
 export interface StoreMinified {

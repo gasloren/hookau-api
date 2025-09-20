@@ -9,3 +9,4 @@ export * from './menue.js';
 export * from './order.js';
 export * from './loggers.js';
 export * from './credential.js';
+export * from './shared.js';

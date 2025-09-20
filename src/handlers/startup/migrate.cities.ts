@@ -68,6 +68,10 @@ async function insertCity(
     name: cityV1.name,
     offset: Number(cityV1.gtm || '-3'),
     status: !cityV1.enabled ? 'processing' : 'published',
+    coords: {
+      lat: 0,
+      lng: 0
+    },
     logister: cityV1.currLogister,
     startHour: cityV1.schedule?.startHour || '09:00',
     finalHour: cityV1.schedule?.finalHour || '23:00',

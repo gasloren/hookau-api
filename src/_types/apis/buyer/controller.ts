@@ -6,7 +6,8 @@ import type {
   GetStoreItem,
   GetFormattedMenue,
   GetMenuPageData,
-  PostMenuOrderItems
+  PostMenuOrderItems,
+  GetOrderPageData
 } from './index.js';
 
 // --
@@ -21,4 +22,5 @@ export interface Controller {
   getFormattedMenue: GetFormattedMenue.Method;
   getMenuPageData: GetMenuPageData.Method;
   postMenuOrderItems: PostMenuOrderItems.Method;
+  getOrderPageData: GetOrderPageData.Method;
 }
