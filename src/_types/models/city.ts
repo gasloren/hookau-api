@@ -2,7 +2,12 @@ import type { Coords } from './shared.js';
 
 // ---
 
-export type CityStatus = 'published' | 'processing' | 'countdown';
+export type CityStatus =
+  'published' |
+  'processing' |
+  'countdown' |
+  'maintenance' |
+  'holiday';
 
 export interface City {
   _id: string;

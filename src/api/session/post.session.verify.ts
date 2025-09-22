@@ -50,7 +50,7 @@ export function postSessionVerify(
     // buyer no necesita el allow
     if (!auth) {
       await mdb.auth.insert({ email, allow: {} });
-      await migrateClientToBuyer(mdb, email); // if buyer not exists
+      await migrateClientToBuyer(mdb, city, email); // if buyer not exists
     }
 
     const hasAuth = app === 'buyer' ||

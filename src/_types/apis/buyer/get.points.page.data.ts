@@ -4,8 +4,8 @@ import type { ApiResponse } from '../shared.js';
 
 // models types
 import type {
-  Coords,
-  Points
+  Points,
+  SelectTable
 } from '../../models/index.js';
 
 // ---
@@ -19,9 +19,8 @@ export type Params = {
 }
 
 export type Payload = {
-  cityName: string;
-  cityCoords: Coords;
   userPoints: Points;
+  citiesNames: SelectTable[];
 }
 
 export type Method = (

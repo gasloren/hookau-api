@@ -10,14 +10,13 @@ export type Geolocation = {
 }
 
 export interface Point_V1 {
-  id: number;
+  id: number;    // deprecated
   codigo: string;
   calle: string;
   altura: string;
   numero: string;
-  calle1: string;
-  calle2: string;
-  referencia: string;
+  calle1: string;  // deprecated
+  calle2: string;  // deprecated
   barrio: string;
   ciudad: string;
   cod_ciudad: string;
@@ -25,6 +24,7 @@ export interface Point_V1 {
   cod_pais: string;
   cod_barrio: string;
   ubicacion: Geolocation;
+  referencia: string;
 }
 
 export interface Profile {
@@ -56,22 +56,20 @@ export interface Client {
   updatedAt?: Date;
 }
 
+
 export interface Point {
-  id: string;
-  calle: string;
-  altura: string;
-  numero: string;
-  barrio: string;
-  ciudad: string;
-  cod_ciudad: string;
-  pais: string;
-  cod_pais: string;
-  coords: Coords;
-  referencia: string;
+  id: string; // number to string
+  alias: string;
+  address: string;
+  apartNum: string;
+  cityName: string;
+  location: Coords | null;
+  reference: string; // numero de puerta o referencia
 }
 
+
 export interface Points {
-  [ id: string ]: Point;
+  [ id: number ]: Point;
 };
 
 export interface Buyer extends Client {

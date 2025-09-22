@@ -62,7 +62,7 @@ export function postSessionSignUp(
 
     return {
       success: true,
-      message: 'Ingresá el código que hemos enviado a tu casilla de email, si no lo encuentras revisa también la carpeta de spam.',
+      message: 'Ingresá el código que hemos enviado a tu casilla de email. Asegúrate de revisar la carpeta de spam o correo no deseado.',
       payload: {
         expiresAt: Date.now() + (expirationInSeconds * 1000)
       }

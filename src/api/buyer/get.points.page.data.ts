@@ -3,6 +3,7 @@ import type { IDatabase } from '../../mongo/types.js';
 
 import { OOPS } from '../../routes/constants.js';
 import { checkUserAuth } from '../auth.handler.js';
+import { getCitiesNamesList } from './get.cities.names.list.js';
 
 // --
 /**
@@ -40,17 +41,16 @@ export function getPointsPageData(
     const buyer = await mdb.buyers.getOne({ email: userEmail });
     if (!buyer?._id) return OOPS;
 
-    const city = await mdb.cities.getOne({
-      _id: cityId
-    });
-    if (!city) return OOPS;
+    const {
+      payload: citiesNames
+    } = await getCitiesNamesList(mdb)({});
+    if (!citiesNames?.length) return OOPS;
 
     return {
       success: true,
       payload: {
-        cityName: city.name,
-        cityCoords: city.coords,
-        userPoints: buyer.points
+        userPoints: buyer.points,
+        citiesNames
       }
     };
 

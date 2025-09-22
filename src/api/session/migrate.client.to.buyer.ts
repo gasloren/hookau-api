@@ -1,35 +1,49 @@
 import type { T } from '../../_types/index.js';
-import type { Point, Point_V1 } from '../../_types/models/buyer.js';
 import type { IDatabase } from '../../mongo/types.js';
 
 // ---
 
-function pointV1ToV3(
-  pointV1: Point_V1
-): Point {
+function ubicacionV1ToV3(
+  ubicacion: T.Model.Geolocation
+): T.Model.Coords | null {
+  if (!ubicacion?.lat) return null;
+  if (!ubicacion?.lng) return null;
   return {
-    id: pointV1.codigo,
-    calle: pointV1.calle,
-    altura: pointV1.altura,
-    numero: pointV1.numero,
-    barrio: pointV1.barrio,
-    ciudad: pointV1.ciudad,
-    cod_ciudad: pointV1.cod_ciudad,
-    pais: pointV1.pais,
-    cod_pais: pointV1.cod_pais,
-    coords: {
-      lat: Number(pointV1.ubicacion.lat),
-      lng: Number(pointV1.ubicacion.lng)
-    },
-    referencia: pointV1.referencia
-  }
+    lat: Number(ubicacion.lat),
+    lng: Number(ubicacion.lng)
+  };
 }
 
+// ---
+
+function pointV1ToV3(
+  id: number,
+  pointV1: T.Model.Point_V1
+): T.Model.Point {
+  const {
+    codigo = '',
+    calle = '',
+    altura = '',
+    numero = '',
+    ciudad = '',
+    referencia = ''
+  } = pointV1 || {};
+  return {
+    id: id.toString(),
+    alias: codigo.toLowerCase(),
+    address: `${calle.toLowerCase()} ${altura}`,
+    apartNum: numero.toLowerCase(),
+    cityName: ciudad.toLowerCase(),
+    location: ubicacionV1ToV3(pointV1.ubicacion),
+    reference: referencia.toLowerCase()
+  };
+}
 
 // ---
 
 export async function migrateClientToBuyer(
   mdb: IDatabase,
+  city: string,
   email: string
 ): Promise<void> {
 
@@ -49,9 +63,9 @@ export async function migrateClientToBuyer(
 
   const points: T.Model.Points = {};
 
-  if (point1?.codigo) points[point1.codigo] = pointV1ToV3(point1);
-  if (point2?.codigo) points[point2.codigo] = pointV1ToV3(point2);
-  if (point3?.codigo) points[point3.codigo] = pointV1ToV3(point3);
+  if (point1?.codigo) points[1] = pointV1ToV3(1, point1);
+  if (point2?.codigo) points[2] = pointV1ToV3(2, point2);
+  if (point3?.codigo) points[3] = pointV1ToV3(3, point3);
 
   const data: T.Model.Buyer = {
     _id,
