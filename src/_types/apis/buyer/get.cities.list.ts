@@ -1,18 +1,18 @@
 
 // response types
-import type { SelectTable } from '../../models/shared.js';
+import type { City } from '../../models/city.js';
 import type { ApiResponse } from '../shared.js';
 
 
 // ---
 
-export type Endpoint = '/buyer-api/get-cities-names-list';
+export type Endpoint = '/buyer-api/get-cities-list';
 
 // ---
 
 export type Params = {}
 
-export type Payload = SelectTable[];
+export type Payload = City[];
 
 export type Method = (
   params: Params

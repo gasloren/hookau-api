@@ -1,4 +1,5 @@
 import type {
+  GetCitiesList,
   GetMinifiedStores,
   GetStoresStatusInfo,
   GetStoreStatusInfo,
@@ -8,14 +9,14 @@ import type {
   GetMenuPageData,
   PostMenuOrderItems,
   GetOrderPageData,
-  GetPointsPageData,
-  GetCitiesNamesList
+  GetPointsPageData
 } from './index.js';
 
 // --
 
 // Interface for implements BuyerApi
 export interface Controller {
+  getCitiesList: GetCitiesList.Method;
   getMinifiedStores: GetMinifiedStores.Method;
   getStoresStatusInfo: GetStoresStatusInfo.Method;
   getStoreStatusInfo: GetStoreStatusInfo.Method;
@@ -26,5 +27,4 @@ export interface Controller {
   postMenuOrderItems: PostMenuOrderItems.Method;
   getOrderPageData: GetOrderPageData.Method;
   getPointsPageData: GetPointsPageData.Method;
-  getCitiesNamesList: GetCitiesNamesList.Method;
 }

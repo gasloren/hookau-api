@@ -1,6 +1,7 @@
 import type { T } from '../../_types/index.js';
 import type { IDatabase } from '../../mongo/types.js';
 
+import { getCitiesList } from './get.cities.list.js';
 import { getMinifiedStores } from './get.minified.stores.js';
 import { getStoreItem } from './get.store.item.js';
 import { getStoresPromos } from './get.stores.promos.js';
@@ -11,7 +12,6 @@ import { getMenuPageData } from './get.menu.page.data.js';
 import { postMenuOrderItems } from './post.menu.order.items.js';
 import { getOrderPageData } from './get.order.page.data.js';
 import { getPointsPageData } from './get.points.page.data.js';
-import { getCitiesNamesList } from './get.cities.names.list.js';
 
 // --
 
@@ -21,6 +21,7 @@ export function buyerApiController(
 ): T.Api.Buyer.Controller {
 
   return {
+    getCitiesList: getCitiesList(mdb),
     getMinifiedStores: getMinifiedStores(mdb),
     getStoresStatusInfo: getStoresStatusInfo(mdb),
     getStoreStatusInfo: getStoreStatusInfo(mdb),
@@ -30,8 +31,7 @@ export function buyerApiController(
     getMenuPageData: getMenuPageData(mdb, userEmail),
     postMenuOrderItems: postMenuOrderItems(mdb, userEmail),
     getOrderPageData: getOrderPageData(mdb, userEmail),
-    getPointsPageData: getPointsPageData(mdb, userEmail),
-    getCitiesNamesList: getCitiesNamesList(mdb)
+    getPointsPageData: getPointsPageData(mdb, userEmail)
   };
 
 }

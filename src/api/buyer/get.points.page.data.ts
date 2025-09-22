@@ -3,7 +3,7 @@ import type { IDatabase } from '../../mongo/types.js';
 
 import { OOPS } from '../../routes/constants.js';
 import { checkUserAuth } from '../auth.handler.js';
-import { getCitiesNamesList } from './get.cities.names.list.js';
+import { getCitiesList } from './get.cities.list.js';
 
 // --
 /**
@@ -42,15 +42,15 @@ export function getPointsPageData(
     if (!buyer?._id) return OOPS;
 
     const {
-      payload: citiesNames
-    } = await getCitiesNamesList(mdb)({});
-    if (!citiesNames?.length) return OOPS;
+      payload: citiesList = []
+    } = await getCitiesList(mdb)({});
+    if (!citiesList?.length) return OOPS;
 
     return {
       success: true,
       payload: {
         userPoints: buyer.points,
-        citiesNames
+        citiesList
       }
     };
 

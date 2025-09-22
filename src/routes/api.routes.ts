@@ -5,7 +5,7 @@ import { appLogger } from './app.logger.js';
 // admin api
 
 // buyer api
-import { getCitiesNamesList } from './buyer/get.cities.names.list.js';
+import { getCitiesList } from './buyer/get.cities.list.js';
 import { getMinifiedStores } from './buyer/get.minified.stores.js';
 import { getStoresStatusInfo } from './buyer/get.stores.status.info.js';
 import { getStoreStatusInfo } from './buyer/get.store.status.info.js';
@@ -34,7 +34,7 @@ export function apiRoutes(app: Application) {
   postSessionVerify(app);
 
   // buyer api
-  getCitiesNamesList(app);
+  getCitiesList(app);
   getMinifiedStores(app);
   getStoresStatusInfo(app);
   getStoreStatusInfo(app);

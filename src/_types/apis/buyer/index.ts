@@ -1,4 +1,5 @@
 
+export * as GetCitiesList from './get.cities.list.js';
 export * as GetMinifiedStores from './get.minified.stores.js';
 export * as GetStoresStatusInfo from './get.stores.status.info.js'; // city stores
 export * as GetStoreStatusInfo from './get.store.status.info.js'; // one store
@@ -9,7 +10,6 @@ export * as GetMenuPageData from './get.menu.page.data.js';
 export * as PostMenuOrderItems from './post.menu.order.items.js';
 export * as GetOrderPageData from './get.order.page.data.js';
 export * as GetPointsPageData from './get.points.page.data.js';
-export * as GetCitiesNamesList from './get.cities.names.list.js';
 
 export * from './controller.js';
 

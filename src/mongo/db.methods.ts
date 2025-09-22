@@ -15,6 +15,7 @@ export default function dbMethods<Model>(
 
   const search = async (filters: object, options = {}) => {
     try {
+      console.log(options)
       const list = await cursor.find(filters, options).toArray();
       return (list || []) as Model[];
     } catch(error) {

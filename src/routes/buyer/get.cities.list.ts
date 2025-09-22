@@ -7,18 +7,18 @@ import { OOPS } from '../constants.js';
 
 // ---
 
-export function getCitiesNamesList(app: Application) {
+export function getCitiesList(app: Application) {
 
-  const path: T.Api.Buyer.GetCitiesNamesList.Endpoint = '/buyer-api/get-cities-names-list';
+  const path: T.Api.Buyer.GetCitiesList.Endpoint = '/buyer-api/get-cities-list';
 
   app.get(path, async (
-    req: Request<{}, {}, {}, T.Api.Buyer.GetCitiesNamesList.Params>,
+    req: Request<{}, {}, {}, T.Api.Buyer.GetCitiesList.Params>,
     res: Response
   ) => {
 
     try {
 
-      const result = await req.apiCtrl.buyer.getCitiesNamesList(req.query);
+      const result = await req.apiCtrl.buyer.getCitiesList(req.query);
 
       res.status(200).json(result);
 
