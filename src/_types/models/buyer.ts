@@ -62,14 +62,13 @@ export interface Point {
   alias: string;
   address: string;
   apartNum: string;
-  cityName: string;
   location: Coords | null;
   reference: string; // numero de puerta o referencia
 }
 
 
 export interface Points {
-  [ id: number ]: Point;
+  [ id: string ]: Point;
 };
 
 export interface Buyer extends Client {

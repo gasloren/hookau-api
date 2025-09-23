@@ -1,5 +1,6 @@
 import type { T } from '../../_types/index.js';
 import type { IDatabase } from '../../mongo/types.js';
+import { randomId } from '../../utils.js';
 
 // ---
 
@@ -17,7 +18,6 @@ function ubicacionV1ToV3(
 // ---
 
 function pointV1ToV3(
-  id: number,
   pointV1: T.Model.Point_V1
 ): T.Model.Point {
   const {
@@ -29,11 +29,10 @@ function pointV1ToV3(
     referencia = ''
   } = pointV1 || {};
   return {
-    id: id.toString(),
+    id: randomId(),
     alias: codigo.toLowerCase(),
-    address: `${calle.toLowerCase()} ${altura}`,
+    address: `${calle} ${altura}, ${ciudad}`,
     apartNum: numero.toLowerCase(),
-    cityName: ciudad.toLowerCase(),
     location: ubicacionV1ToV3(pointV1.ubicacion),
     reference: referencia.toLowerCase()
   };
@@ -63,9 +62,18 @@ export async function migrateClientToBuyer(
 
   const points: T.Model.Points = {};
 
-  if (point1?.codigo) points[1] = pointV1ToV3(1, point1);
-  if (point2?.codigo) points[2] = pointV1ToV3(2, point2);
-  if (point3?.codigo) points[3] = pointV1ToV3(3, point3);
+  if (point1?.codigo) {
+    const d1 = pointV1ToV3(point1);
+    points[d1.id] = { ...d1 };
+  }
+   if (point2?.codigo) {
+    const d2 = pointV1ToV3(point2);
+    points[d2.id] = { ...d2 };
+  }
+   if (point3?.codigo) {
+    const d3 = pointV1ToV3(point3);
+    points[d3.id] = { ...d3 };
+  }
 
   const data: T.Model.Buyer = {
     _id,
