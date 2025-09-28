@@ -61,6 +61,8 @@ export interface Point {
   id: string; // number to string
   alias: string;
   address: string;
+  cityCode: string;
+  cityName: string;
   apartNum: string;
   location: Coords | null;
   reference: string; // numero de puerta o referencia

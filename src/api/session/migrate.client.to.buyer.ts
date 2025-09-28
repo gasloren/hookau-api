@@ -33,6 +33,8 @@ function pointV1ToV3(
     alias: codigo.toLowerCase(),
     address: `${calle} ${altura}, ${ciudad}`,
     apartNum: numero.toLowerCase(),
+    cityCode: ciudad === 'Zapala' ? 'AR8340' : 'AR8370',
+    cityName: ciudad || 'San Martín de los Andes',
     location: ubicacionV1ToV3(pointV1.ubicacion),
     reference: referencia.toLowerCase()
   };
@@ -42,7 +44,6 @@ function pointV1ToV3(
 
 export async function migrateClientToBuyer(
   mdb: IDatabase,
-  city: string,
   email: string
 ): Promise<void> {
 

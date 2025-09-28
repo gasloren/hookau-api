@@ -10,6 +10,7 @@ export * as GetMenuPageData from './get.menu.page.data.js';
 export * as PostMenuOrderItems from './post.menu.order.items.js';
 export * as GetOrderPageData from './get.order.page.data.js';
 export * as GetPointsPageData from './get.points.page.data.js';
+export * as PostAddressPoint from './post.address.point.js';
 
 export * from './controller.js';
 

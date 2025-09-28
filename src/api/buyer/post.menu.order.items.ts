@@ -69,14 +69,16 @@ export function postMenuOrderItems(
       _id: order._id,
       storeId
     }, {
-      orderView,
-      orderItems,
-      orderTotal: charged,
-      discounted: amount - netAmount,
-      accredited,
-      balanceDue: charged - accredited,
-      driverNoFee: charged >= 40000,
-      statusId: randomId()
+      $set: {
+        orderView,
+        orderItems,
+        orderTotal: charged,
+        discounted: amount - netAmount,
+        accredited,
+        balanceDue: charged - accredited,
+        driverNoFee: charged >= 40000,
+        statusId: randomId()
+      }
     });
 
     if (!updated) return OOPS;

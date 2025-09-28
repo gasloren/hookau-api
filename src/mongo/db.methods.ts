@@ -46,11 +46,11 @@ export default function dbMethods<Model>(
     }
   };
 
-  const update = async (filters: object = {}, document: object = {}, options = {}) => {
+  const update = async (filters: object = {}, modifier: object = {}, options = {}) => {
+    const docKeys = Object.keys(modifier);
+    if (!docKeys.includes('$set') && !docKeys.includes('$unset')) return 0;
     try {
-      const payload = await cursor.updateMany(filters, {
-        $set: document
-      }, {
+      const payload = await cursor.updateMany(filters, modifier, {
         ...options,
         upsert: false
       });
@@ -64,7 +64,9 @@ export default function dbMethods<Model>(
   const upsert = async (filters: object = {}, document: object = {}, options = {}) => {
     const item = await getOne(filters, options) as StringId<Model>;
     if (!item) return await insert(document);
-    return await update({ ...filters, _id: item._id }, document, options);
+    return await update({ ...filters, _id: item._id }, {
+      $set: document
+    }, options);
   };
 
   const remove = async (filters: object = {}) => {

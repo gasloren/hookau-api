@@ -23,7 +23,7 @@ export interface DbMethods<Model> {
   search(filters: object, options?: object): Promise<Model[]>;
   getOne(filters: object, options?: object): Promise<Model | null>;
   insert(document: object): Promise<string>;
-  update(filters: object, document: object, options?: object): Promise<number>;
+  update(filters: object, modifier: object, options?: object): Promise<number>;
   upsert(filters: object, document: object, options?: object): Promise<string | number>;
   remove(filters: object): Promise<number>;
 }
