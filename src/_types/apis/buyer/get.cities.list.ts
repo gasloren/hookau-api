@@ -10,10 +10,8 @@ export type Endpoint = '/buyer-api/get-cities-list';
 
 // ---
 
-export type Params = {}
+export type Params = void;
 
 export type Payload = City[];
 
-export type Method = (
-  params: Params
-) => Promise<ApiResponse<Payload>>;
+export type Method = () => Promise<ApiResponse<Payload>>;

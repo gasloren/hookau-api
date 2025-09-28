@@ -43,7 +43,7 @@ export function getPointsPageData(
 
     const {
       payload: citiesList = []
-    } = await getCitiesList(mdb)({});
+    } = await getCitiesList(mdb)();
     if (!citiesList?.length) return OOPS;
 
     return {

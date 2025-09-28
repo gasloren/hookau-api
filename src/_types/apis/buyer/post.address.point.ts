@@ -19,7 +19,7 @@ export type Params = {
   pointData?: Point;
 }
 
-export type Payload = {}
+export type Payload = void;
 
 export type Method = (
   params: Params

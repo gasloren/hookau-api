@@ -18,7 +18,7 @@ export function getCitiesList(app: Application) {
 
     try {
 
-      const result = await req.apiCtrl.buyer.getCitiesList(req.query);
+      const result = await req.apiCtrl.buyer.getCitiesList();
 
       res.status(200).json(result);
 
