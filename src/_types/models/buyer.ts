@@ -38,6 +38,12 @@ export interface Required {
   conditionsAccepted?: Date;
 }
 
+export interface RiderAccount {
+  id: string;
+  city: string;
+  status: "register" | "enabled" | "disabled";
+}
+
 export interface Client {
   _id: string;
   email?: string;
@@ -53,6 +59,8 @@ export interface Client {
   point3?: Point_V1 | null;
   likeds?: string;
   service?: "email" | "phone";
+  customerId?: string;
+  driver?: RiderAccount;
   updatedAt?: Date;
 }
 
@@ -73,8 +81,9 @@ export interface Points {
   [ id: string ]: Point;
 };
 
-export interface Buyer extends Client {
+export interface Buyer extends Omit<Client, 'driver'> {
   _id: string;
   email: string;
+  rider?: RiderAccount | undefined;
   points: Points;
 }

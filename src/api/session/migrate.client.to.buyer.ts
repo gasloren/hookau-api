@@ -58,6 +58,7 @@ export async function migrateClientToBuyer(
     point1,
     point2,
     point3,
+    driver,
     ...otherProps
   } = client;
 
@@ -79,6 +80,7 @@ export async function migrateClientToBuyer(
   const data: T.Model.Buyer = {
     _id,
     email,
+    rider: driver,
     points,
     ...otherProps
   };

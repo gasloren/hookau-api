@@ -21,7 +21,7 @@ export function Database(mongo: Db): IDatabase {
     v1: {
       users: dbMethods(mongo.collection('users')),
       cities: dbMethods(mongo.collection('cities')),
-      clients: dbMethods(mongo.collection('clients')),
+      clients: dbMethods(mongo.collection('clients'))
     }
   };
 

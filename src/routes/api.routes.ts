@@ -20,6 +20,8 @@ import { postMenuOrderItems } from './buyer/post.menu.order.items.js';
 import { getOrderPageData } from './buyer/get.order.page.data.js';
 import { getPointsPageData } from './buyer/get.points.page.data.js';
 import { postAddressPoint } from './buyer/post.address.point.js';
+import { getAccountPageData } from './buyer/get.account.page.data.js';
+import { postAccountProfile } from './buyer/post.account.profile.js';
 
 // ----
 
@@ -47,5 +49,7 @@ export function apiRoutes(app: Application) {
   getOrderPageData(app);
   getPointsPageData(app);
   postAddressPoint(app);
+  getAccountPageData(app);
+  postAccountProfile(app);
   
 }

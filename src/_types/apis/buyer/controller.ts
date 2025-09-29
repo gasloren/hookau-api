@@ -10,7 +10,9 @@ import type {
   PostMenuOrderItems,
   GetOrderPageData,
   GetPointsPageData,
-  PostAddressPoint
+  PostAddressPoint,
+  GetAccountPageData,
+  PostAccountProfile
 } from './index.js';
 
 // --
@@ -29,4 +31,6 @@ export interface Controller {
   getOrderPageData: GetOrderPageData.Method;
   getPointsPageData: GetPointsPageData.Method;
   postAddressPoint: PostAddressPoint.Method;
+  getAccountPageData: GetAccountPageData.Method;
+  postAccountProfile: PostAccountProfile.Method;
 }

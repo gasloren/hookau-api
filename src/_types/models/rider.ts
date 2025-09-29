@@ -9,7 +9,7 @@ export type ZonePrice = {
 export type Vehicle = 'auto' | 'moto' | 'bici';
 
 export interface Rider {
-  userId: string;
+  _id: string;
   city: string;
   nick: string;
   face: string;
@@ -22,9 +22,6 @@ export interface Rider {
   cuitNum: string;
   ivaType: string;
   dominio: string;
-  mpAlias: string;
-  lemonTag: string;
-  mpOwner: string;
   vehicle: Vehicle;
   marketFee: number;
   jobsCount: number;
@@ -35,6 +32,14 @@ export interface Rider {
   };
   zones: {
     [ code: string ]: ZonePrice;
+  };
+  payment: {
+    alias: string;
+    owner: string;
+  };
+  pricing: {
+    km: number;
+    min: number;
   };
   maxOrders: number;
   notifyMe: {
