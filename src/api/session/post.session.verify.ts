@@ -3,8 +3,9 @@ import type { T } from '../../_types/index.js';
 import type { IDatabase } from '../../mongo/types.js';
 import type { IRedisDB } from '../../redis/types.js';
 
-import { randomId } from '../../utils.js';
-import { migrateClientToBuyer } from './migrate.client.to.buyer.js';
+import { checkPendingEmail } from './helpers/check.pending.email.js';
+import { generateNewToken } from './helpers/generate.new.token.js';
+import { migrateClientToBuyer } from './helpers/migrate.client.to.buyer.js';
 
 // --
 /**
@@ -31,10 +32,12 @@ export function postSessionVerify(
 
     if (!storedCode || vcode !== storedCode) {
       return {
-        warning: 'El código es incorrecto o ha caducado, puedes generar otro código de verificación.',
+        warning: 'El pin es incorrecto o ha caducado, generara otro nuevamente',
         rejected: true
       }
     }
+
+    // ** verification code is valid
 
     const auth = await mdb.auth.getOne({
       email
@@ -48,23 +51,40 @@ export function postSessionVerify(
         redirect: `/${app}/${city}/rejected`,
       }; 
     }
+
+    // ** user is authorized
     
-    // buyer no necesita el allow
-    if (!auth && app === 'buyer') {
-      await mdb.auth.insert({ email, allow: {} });
-      await migrateClientToBuyer(mdb, email); // if buyer not exists
+    // buyer "allow" is not required
+    if (app === 'buyer') {
+      if (!auth) {
+        await mdb.auth.insert({ email, allow: {} });
+        await checkPendingEmail(mdb, email); // replace buyer email
+        await migrateClientToBuyer(mdb, email); // if buyer not exists
+      } else if (newEmail && newEmail !== email) {
+        // trying to replace buyer auth email
+        // 1st check if buyer with newEmail exists
+        const buyer = await mdb.buyers.getOne({ email: newEmail });
+        if (buyer) {
+          return {
+            warning: `"${newEmail}" ya está en uso por otra cuenta`
+          };
+        }
+        // 2nd store newEmail as pending for validation
+        await mdb.auth.update({ email }, {
+          $set: {
+            pending: newEmail,
+            expires: Date.now() + (1000 * 60 * 10)
+          }
+        });
+      }
     }
 
-    // generate new token
-    const token = randomId('', 32); // leave in 32
-
-    // 90 dias
-    const expSeconds = 60 * 60 * 24 * 90;
-
-    await rdb.set(token, email, { EX: expSeconds });
+    // create new token and store on redis with the email as key
+    const expSeconds = 60 * 60 * 24 * 90; // 90 dias
+    const token = await generateNewToken(rdb, email, expSeconds);
 
     let redirectTo = `/${app}/${city}`;
-    if (newEmail) {
+    if (newEmail && app === 'buyer') {
       redirectTo = `/${app}/${city}/login?email=${newEmail}`;
     }
   

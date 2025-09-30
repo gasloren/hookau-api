@@ -62,7 +62,7 @@ export function postSessionSignUp(
 
     return {
       success: true,
-      message: 'Ingresá el código que hemos enviado a tu casilla de email. Asegúrate de revisar la carpeta de spam o correo no deseado.',
+      message: `Hemos enviado un pin de validación a "${email}". Asegúrate de revisar la carpeta de spam o correo no deseado.`,
       payload: {
         expiresAt: Date.now() + (expirationInSeconds * 1000)
       }

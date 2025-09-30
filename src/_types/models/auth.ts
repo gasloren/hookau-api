@@ -1,3 +1,4 @@
+
 import type { Shared } from '../apis/index.js';
 
 // ---
@@ -7,4 +8,6 @@ export interface Auth {
   allow: {
     [ Property in Shared.App ]: string[]; // { admin: [ 'AR8340', 'AR8370' ] }
   };
+  pending?: string; // email replace pending for validation
+  expires?: number; // pending email expiration
 }

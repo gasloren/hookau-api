@@ -23,11 +23,11 @@ export function toNewOrderData(
       fname: buyer.profile?.nombre || '',
       lname: buyer.profile?.apellido || '',
       phone: buyer.profile?.telefono || '',
-      email: buyer.email || ''
+      email: buyer.email?.[0] || ''
     },
     receiver: {
       fname: buyer.profile?.nombre || '',
-      phone: buyer.profile?.telefono || buyer.phone || ''
+      phone: buyer.profile?.telefono || ''
     },
     storeName: store.data.brand,
     storeLogo: store.data.logourl,

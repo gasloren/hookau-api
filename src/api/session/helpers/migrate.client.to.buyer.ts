@@ -1,6 +1,6 @@
-import type { T } from '../../_types/index.js';
-import type { IDatabase } from '../../mongo/types.js';
-import { randomId } from '../../utils.js';
+import type { T } from '../../../_types/index.js';
+import type { IDatabase } from '../../../mongo/types.js';
+import { randomId } from '../../../utils.js';
 
 // ---
 
@@ -59,7 +59,9 @@ export async function migrateClientToBuyer(
     point2,
     point3,
     driver,
-    ...otherProps
+    profile,
+    required = {},
+    customerId = ''
   } = client;
 
   const points: T.Model.Points = {};
@@ -82,7 +84,13 @@ export async function migrateClientToBuyer(
     email,
     rider: driver,
     points,
-    ...otherProps
+    profile: {
+      nombre: profile?.nombre || '',
+      apellido: profile?.apellido || '',
+      telefono: profile?.telefono || ''
+    },
+    required,
+    customerId
   };
 
   await mdb.buyers.upsert({ email }, data);

@@ -81,9 +81,12 @@ export interface Points {
   [ id: string ]: Point;
 };
 
-export interface Buyer extends Omit<Client, 'driver'> {
+export interface Buyer {
   _id: string;
   email: string;
   rider?: RiderAccount | undefined;
   points: Points;
+  profile: Profile;
+  required?: Required;
+  customerId?: string;
 }
