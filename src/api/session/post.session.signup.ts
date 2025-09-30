@@ -45,10 +45,10 @@ export function postSessionSignUp(
     const mailSuccess = await mailer({
       to: email,
       subject: 'Código de verificación',
-      text: `Usa este pin para iniciar sesión: ${vcode}`,
+      text: `Usa este pin de validación: ${vcode}`,
       html: `
         <div>
-          <h3>Usa este pin para iniciar sesión:</h3>
+          <h3>Usa este pin de validación:</h3>
           <h1>${vcode}</h1>
         </div>
       `

@@ -23,7 +23,8 @@ export function postSessionVerify(
       app,
       city,
       email,
-      vcode
+      vcode,
+      newEmail
     } = params;
 
     const storedCode = await rdb.get(email);
@@ -35,6 +36,25 @@ export function postSessionVerify(
       }
     }
 
+    const auth = await mdb.auth.getOne({
+      email
+    });
+
+    const hasAuth = app === 'buyer' ||
+      !!auth?.allow?.[app]?.includes(city);
+
+    if (!hasAuth) {
+      return {
+        redirect: `/${app}/${city}/rejected`,
+      }; 
+    }
+    
+    // buyer no necesita el allow
+    if (!auth && app === 'buyer') {
+      await mdb.auth.insert({ email, allow: {} });
+      await migrateClientToBuyer(mdb, email); // if buyer not exists
+    }
+
     // generate new token
     const token = randomId('', 32); // leave in 32
 
@@ -43,18 +63,10 @@ export function postSessionVerify(
 
     await rdb.set(token, email, { EX: expSeconds });
 
-    const auth = await mdb.auth.getOne({
-      email
-    });
-    
-    // buyer no necesita el allow
-    if (!auth) {
-      await mdb.auth.insert({ email, allow: {} });
-      await migrateClientToBuyer(mdb, email); // if buyer not exists
+    let redirectTo = `/${app}/${city}`;
+    if (newEmail) {
+      redirectTo = `/${app}/${city}/login?email=${newEmail}`;
     }
-
-    const hasAuth = app === 'buyer' ||
-      !!auth?.allow?.[app]?.includes(city);
   
     return {
       success: true,
@@ -68,7 +80,7 @@ export function postSessionVerify(
         maxAge: expSeconds,
         priority: 'high'
       },
-      redirect: hasAuth ? `/${app}/${city}` : `/${app}/${city}/rejected`,
+      redirect: redirectTo,
       payload: {
         app,
         city,

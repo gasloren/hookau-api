@@ -13,6 +13,7 @@ export type Params = {
   city: string;
   email: string;
   vcode: string;
+  newEmail?: string; // if is an email auth change
 }
 
 export type Payload = {
