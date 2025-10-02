@@ -91,7 +91,7 @@ async function handleExistingBuyer(
     };
   }
 
-  return await generateTokenResponse(rdb, email, `/buyer/${city}`);
+  return await generateTokenResponse(rdb, email, `/buyer/${city}/login?email=${newEmail}`);
 
 }
 
@@ -106,8 +106,18 @@ async function handlePendingBuyer(
 
   const warning = 'No pudimos cambiar el email de la cuenta, intente nuevamente.';
 
-  const email = buyer.authPending?.email;
+  if (!buyer.authPending) return { warning };
+
+  const email = buyer.authPending.email;
   if (!email) return { warning };
+
+  const expiresAt = buyer.authPending.expAt || 0;
+
+  if (Date.now() > expiresAt) {
+    return {
+      warning: 'El tiempo de seguridad para realizar el cambio de email ha caducado.'
+    };
+  }
 
   const updated = await mdb.buyers.update({
     _id: buyer._id
