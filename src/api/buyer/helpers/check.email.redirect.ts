@@ -14,12 +14,14 @@ export async function checkBuyerRedirect(
   buyer?: T.Model.Buyer | null;
 }> {
 
-  if (!email) return { redirect: `/buyer/${city}` };
-  if (!email.includes('@')) return { redirect: `/buyer/${city}` };
+  const redirect = `/buyer/${city}/login`;
+
+  if (!email) return { redirect };
+  if (!email.includes('@')) return { redirect };
 
   const buyer = await mdb.buyers.getOne({ email });
 
-  if (!buyer?._id) return { redirect: `/buyer/${city}` };
+  if (!buyer?._id) return { redirect };
   if (buyer.blocked) return { redirect: '/buyer/blocked' };
 
   return { buyer };
