@@ -2,7 +2,7 @@ import type { T } from '../../_types/index.js';
 import type { IDatabase } from '../../mongo/types.js';
 
 import { OOPS } from '../../routes/constants.js';
-import { checkUserAuth } from '../auth.handler.js';
+import { checkBuyerRedirect } from './helpers/check.email.redirect.js';
 import { checkHookerMigration } from './helpers/migrate.hooker.data.js';
 
 // --
@@ -28,24 +28,18 @@ export function getAccountPageData(
       };
     }
 
-    const hasAuth = await checkUserAuth(mdb, 'buyer', cityId, userEmail);
+    const {
+      redirect,
+      buyer
+    } = await checkBuyerRedirect(mdb, cityId, userEmail);
 
-    if (!hasAuth) {
-      return {
-        warning: 'Debe iniciar sesión',
-        rejected: true,
-        redirect: `/buyer/${cityId}/login`
-      };
-    }
+    if (redirect) return { redirect };
+    if (!buyer?._id) return OOPS;
 
     const city = await mdb.cities.getOne({ _id: cityId });
     if (!city?._id) return OOPS;
 
-    const buyer = await mdb.buyers.getOne({ email: userEmail });
-    if (!buyer?._id) return OOPS;
-
     const riderId = buyer.rider?.id;
-
     const rider = await checkHookerMigration(mdb, cityId, riderId);
 
     return {

@@ -2,8 +2,8 @@ import type { T } from '../../_types/index.js';
 import type { IDatabase } from '../../mongo/types.js';
 
 import { OOPS } from '../../routes/constants.js';
-import { checkUserAuth } from '../auth.handler.js';
 import { getCitiesList } from './get.cities.list.js';
+import { checkBuyerRedirect } from './helpers/check.email.redirect.js';
 
 // --
 /**
@@ -28,17 +28,12 @@ export function getPointsPageData(
       };
     }
 
-    const hasAuth = await checkUserAuth(mdb, 'buyer', cityId, userEmail);
+    const {
+      redirect,
+      buyer
+    } = await checkBuyerRedirect(mdb, cityId, userEmail);
 
-    if (!hasAuth) {
-      return {
-        warning: 'Debe iniciar sesión',
-        rejected: true,
-        redirect: `/buyer/${cityId}/login`
-      };
-    }
-
-    const buyer = await mdb.buyers.getOne({ email: userEmail });
+    if (redirect) return { redirect };
     if (!buyer?._id) return OOPS;
 
     const {
