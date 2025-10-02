@@ -44,14 +44,8 @@ function pointV1ToV3(
 
 export async function migrateClientToBuyer(
   mdb: IDatabase,
-  email: string
+  client: T.Model.Client
 ): Promise<void> {
-
-  const client = await mdb.v1.clients.getOne({ verifiedEmail: email });
-  if (!client) return;
-
-  const buyer = await mdb.buyers.getOne({ email });
-  if (!!buyer) return;
 
   const {
     _id,
@@ -61,8 +55,11 @@ export async function migrateClientToBuyer(
     driver,
     profile,
     required = {},
-    customerId = ''
+    customerId = '',
+    verifiedEmail: email
   } = client;
+
+  if (!email) return;
 
   const points: T.Model.Points = {};
 
@@ -79,7 +76,7 @@ export async function migrateClientToBuyer(
     points[d3.id] = { ...d3 };
   }
 
-  const data: T.Model.Buyer = {
+  const data: Partial<T.Model.Buyer> = {
     _id,
     email,
     rider: driver,

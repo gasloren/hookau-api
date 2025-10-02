@@ -87,6 +87,11 @@ export interface Buyer {
   rider?: RiderAccount | undefined;
   points: Points;
   profile: Profile;
+  blocked?: boolean;
   required?: Required;
   customerId?: string;
+  authPending?: {
+    email: string; // email replace pending for validation
+    expAt: number; // pending email expiration
+  };
 }

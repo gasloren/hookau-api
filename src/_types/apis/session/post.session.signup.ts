@@ -1,6 +1,6 @@
 
 // response types
-import type { ApiResponse, App } from '../shared.js';
+import type { ApiResponse } from '../shared.js';
 
 // models types
 
@@ -12,8 +12,6 @@ export type Endpoint = '/session-api/signup';
 // ---
 
 export type Params = {
-  app: App;
-  city: string;
   email: string;
 }
 

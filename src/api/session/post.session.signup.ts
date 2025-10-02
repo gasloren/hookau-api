@@ -19,8 +19,6 @@ export function postSessionSignUp(
   return async (params) => {
 
     const {
-      app,
-      city,
       email
     } = params;
 

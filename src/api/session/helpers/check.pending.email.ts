@@ -30,6 +30,10 @@ export async function checkPendingEmail(
     }
   });
 
+  await mdb.auth.remove({
+    email: auth.email
+  });
+
 }
 
 // --

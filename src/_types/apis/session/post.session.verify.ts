@@ -16,15 +16,13 @@ export type Params = {
   newEmail?: string; // if is an email auth change
 }
 
-export type Payload = {
-  app: App;
-  city: string;
-  email: string;
-};
+export type Payload = void;
+
+export type MethodResp = ApiResponse<Payload>;
 
 export type Method = (
   params: Params
-) => Promise<ApiResponse<Payload>>;
+) => Promise<MethodResp>;
 
 
 
