@@ -53,29 +53,23 @@ export async function checkHookerMigration(
   mdb: IDatabase,
   cityId: string,
   riderId?: string
-): Promise<T.Model.Rider | null> {
+): Promise<void> {
 
-  if (!riderId) return null;
+  if (!riderId) return;
 
   const rider = await mdb.riders.getOne({
     city: cityId,
     _id: riderId
   });
-  if (rider) return rider;
+  if (rider) return;
 
   const hooker = await mdb.v1.users.getOne({
     _id: riderId,
     userrole: 'hooker'
   }) as T.Model.HookerV1;
 
-  if (!hooker) return null;
+  if (!hooker) return;
 
   await mdb.riders.insert(hookerToRiderData(hooker));
 
-  const migrated = await mdb.riders.getOne({
-    city: cityId,
-    _id: riderId
-  });
-
-  return migrated;
 }

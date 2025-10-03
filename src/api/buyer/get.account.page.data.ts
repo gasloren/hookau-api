@@ -40,7 +40,9 @@ export function getAccountPageData(
     if (!city?._id) return OOPS;
 
     const riderId = buyer.rider?.id;
-    const rider = await checkHookerMigration(mdb, cityId, riderId);
+    await checkHookerMigration(mdb, cityId, riderId);
+
+    const rider = await mdb.riders.getOne({ email: userEmail });
 
     return {
       success: true,
