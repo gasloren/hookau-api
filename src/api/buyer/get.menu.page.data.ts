@@ -1,7 +1,7 @@
 import type { T } from '../../_types/index.js';
 import type { IDatabase } from '../../mongo/types.js';
 
-import { OOPS } from '../../routes/constants.js';
+import { BAD_PARAMS, OOPS } from '../constants.js';
 import { checkBuyerRedirect } from './helpers/check.email.redirect.js';
 import { toNewOrderData } from './helpers/to.new.order.data.js';
 import { toStoreStatusInfo } from './helpers/to.stores.status.info.js';
@@ -24,11 +24,7 @@ export function getMenuPageData(
       storeId
     } = params;
 
-    if (!cityId || !storeId) {
-      return {
-        warning: 'Parametros invalidos'
-      };
-    }
+    if (!cityId || !storeId) return BAD_PARAMS;
 
     const {
       redirect,

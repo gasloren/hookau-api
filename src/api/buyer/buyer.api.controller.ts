@@ -15,6 +15,7 @@ import { getPointsPageData } from './get.points.page.data.js';
 import { postAddressPoint } from './post.address.point.js';
 import { getAccountPageData } from './get.account.page.data.js';
 import { postAccountProfile } from './post.account.profile.js';
+import { postOrderModeData } from './post.order.mode.data.js';
 
 // --
 
@@ -37,7 +38,8 @@ export function buyerApiController(
     getPointsPageData: getPointsPageData(mdb, userEmail),
     postAddressPoint: postAddressPoint(mdb, userEmail),
     getAccountPageData: getAccountPageData(mdb, userEmail),
-    postAccountProfile: postAccountProfile(mdb, userEmail)
+    postAccountProfile: postAccountProfile(mdb, userEmail),
+    postOrderModeData: postOrderModeData(mdb, userEmail)
   };
 
 }

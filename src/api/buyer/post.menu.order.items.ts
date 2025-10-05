@@ -1,7 +1,7 @@
 import type { T } from '../../_types/index.js';
 import type { IDatabase } from '../../mongo/types.js';
 
-import { OOPS } from '../../routes/constants.js';
+import { OOPS, BAD_PARAMS } from '../constants.js';
 import { randomId } from '../../utils.js';
 import { checkBuyerRedirect } from './helpers/check.email.redirect.js';
 import ordersUtils from './helpers/to.order.viewer.list.js';
@@ -25,9 +25,11 @@ export function postMenuOrderItems(
       orderItems = []
     } = params;
 
-    if (!city || !storeId || !orderItems?.length) {
+    if (!city || !storeId) return BAD_PARAMS;
+
+    if (!orderItems?.length) {
       return {
-        warning: 'Parametros invalidos'
+        warning: 'Por favor cargue el carrito'
       };
     }
 

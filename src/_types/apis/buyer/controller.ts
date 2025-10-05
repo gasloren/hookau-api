@@ -12,7 +12,8 @@ import type {
   GetPointsPageData,
   PostAddressPoint,
   GetAccountPageData,
-  PostAccountProfile
+  PostAccountProfile,
+  ProstOrderModeData
 } from './index.js';
 
 // --
@@ -33,4 +34,5 @@ export interface Controller {
   postAddressPoint: PostAddressPoint.Method;
   getAccountPageData: GetAccountPageData.Method;
   postAccountProfile: PostAccountProfile.Method;
+  postOrderModeData: ProstOrderModeData.Method;
 }

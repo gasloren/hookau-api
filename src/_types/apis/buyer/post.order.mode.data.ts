@@ -4,28 +4,24 @@ import type { ApiResponse } from '../shared.js';
 
 // models types
 import type {
-  Order,
-  Points,
-  StoreStatusInfo
+  Modality,
+  Receiver
 } from '../../models/index.js';
 
 // ---
 
-export type Endpoint = '/buyer-api/get-order-page-data';
+export type Endpoint = '/buyer-api/post-order-mode-data';
 
 // ---
 
 export type Params = {
   city: string;
   orderId: string;
+  modality: Modality;
+  receiver: Receiver;
 }
 
-export type Payload = {
-  cityName: string;
-  orderData: Order;
-  userPoints: Points;
-  statusInfo: StoreStatusInfo;
-}
+export type Payload = void;
 
 export type Method = (
   params: Params

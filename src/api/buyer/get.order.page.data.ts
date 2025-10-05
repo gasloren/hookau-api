@@ -1,7 +1,7 @@
 import type { T } from '../../_types/index.js';
 import type { IDatabase } from '../../mongo/types.js';
 
-import { OOPS } from '../../routes/constants.js';
+import { BAD_PARAMS, OOPS } from '../constants.js';
 import { checkBuyerRedirect } from './helpers/check.email.redirect.js';
 import { toStoreStatusInfo } from './helpers/to.stores.status.info.js';
 
@@ -23,11 +23,7 @@ export function getOrderPageData(
       orderId
     } = params;
 
-    if (!cityId || !orderId) {
-      return {
-        warning: 'Parametros invalidos'
-      };
-    }
+    if (!cityId || !orderId) return BAD_PARAMS;
 
     const {
       redirect,
@@ -58,7 +54,9 @@ export function getOrderPageData(
     return {
       success: !!order?._id,
       payload: {
-        orderData: order || null,
+        cityName: city.name,
+        orderData: order,
+        userPoints: buyer.points,
         statusInfo: toStoreStatusInfo(store.status),
         cityCoords: city.coords,
         storeCoords: store.data.coords

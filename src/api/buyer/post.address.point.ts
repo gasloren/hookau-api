@@ -1,7 +1,7 @@
 import type { T } from '../../_types/index.js';
 import type { IDatabase } from '../../mongo/types.js';
 
-import { OOPS } from '../../routes/constants.js';
+import { BAD_PARAMS, OOPS } from '../constants.js';
 import { checkBuyerRedirect } from './helpers/check.email.redirect.js';
 
 // --
@@ -23,11 +23,7 @@ export function postAddressPoint(
       pointData
     } = params;
 
-    if (!city) {
-      return {
-        warning: 'Parametros invalidos'
-      };
-    }
+    if (!city) return BAD_PARAMS;
 
     const {
       redirect,

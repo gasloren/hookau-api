@@ -1,6 +1,6 @@
 import type { T } from '../../_types/index.js';
 import type { IDatabase } from '../../mongo/types.js';
-import { OOPS } from '../../routes/constants.js';
+import { BAD_PARAMS, OOPS } from '../constants.js';
 
 import { checkBuyerRedirect } from './helpers/check.email.redirect.js';
 
@@ -22,11 +22,7 @@ export function postAccountProfile(
       profile
     } = params;
 
-    if (!city || !profile) {
-      return {
-        warning: 'Parametros invalidos'
-      };
-    }
+    if (!city || !profile) return BAD_PARAMS;
 
     const {
       redirect,
