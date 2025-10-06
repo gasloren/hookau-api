@@ -8,7 +8,7 @@ import { checkBuyerRedirect } from './helpers/check.email.redirect.js';
 // --
 /**
  * 
- * @param db 
+ * @param db
  * @returns 
  */
 export function postOrderModeData(
@@ -60,7 +60,7 @@ export function postOrderModeData(
 
     return {
       success: true,
-      redirect: `/buyer/${city}/order/${orderId}/${modality}/address`
+      redirect: `/buyer/${city}/order/${orderId}/address`
     };
 
   }
