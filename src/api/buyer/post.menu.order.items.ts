@@ -82,7 +82,7 @@ export function postMenuOrderItems(
 
     return {
       success: true,
-      redirect: `/buyer/${city}/order/${order._id}`
+      redirect: `/buyer/${city}/order/${order._id}/modality`
     };
 
   }

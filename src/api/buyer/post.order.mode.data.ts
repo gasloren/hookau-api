@@ -60,7 +60,7 @@ export function postOrderModeData(
 
     return {
       success: true,
-      redirect: `/buyer/${city}/order/${orderId}/address`
+      redirect: `/buyer/${city}/order/${orderId}/${modality}`
     };
 
   }
