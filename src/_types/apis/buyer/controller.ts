@@ -13,7 +13,8 @@ import type {
   PostAddressPoint,
   GetAccountPageData,
   PostAccountProfile,
-  ProstOrderModeData
+  PostOrderModeData,
+  PostOrderPointId
 } from './index.js';
 
 // --
@@ -34,5 +35,6 @@ export interface Controller {
   postAddressPoint: PostAddressPoint.Method;
   getAccountPageData: GetAccountPageData.Method;
   postAccountProfile: PostAccountProfile.Method;
-  postOrderModeData: ProstOrderModeData.Method;
+  postOrderModeData: PostOrderModeData.Method;
+  postOrderPointId: PostOrderPointId.Method;
 }

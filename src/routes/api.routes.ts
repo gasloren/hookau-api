@@ -23,6 +23,7 @@ import { postAddressPoint } from './buyer/post.address.point.js';
 import { getAccountPageData } from './buyer/get.account.page.data.js';
 import { postAccountProfile } from './buyer/post.account.profile.js';
 import { postOrderModeData } from './buyer/post.order.mode.data.js';
+import { postOrderPointId } from './buyer/post.order.point.id.js';
 
 // ----
 
@@ -53,5 +54,6 @@ export function apiRoutes(app: Application) {
   getAccountPageData(app);
   postAccountProfile(app);
   postOrderModeData(app);
+  postOrderPointId(app);
   
 }

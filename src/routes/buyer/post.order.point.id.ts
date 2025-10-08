@@ -7,18 +7,18 @@ import { OOPS } from '../constants.js';
 
 // ---
 
-export function postOrderModeData(app: Application) {
+export function postOrderPointId(app: Application) {
 
-  const path: T.Api.Buyer.PostOrderModeData.Endpoint = '/buyer-api/post-order-mode-data';
+  const path: T.Api.Buyer.PostOrderPointId.Endpoint = '/buyer-api/post-order-point-id';
 
   app.post(path, async (
-    req: Request<{}, {}, T.Api.Buyer.PostOrderModeData.Params, {}>,
+    req: Request<{}, {}, T.Api.Buyer.PostOrderPointId.Params, {}>,
     res: Response
   ) => {
 
     try {
 
-      const result = await req.apiCtrl.buyer.postOrderModeData(req.body);
+      const result = await req.apiCtrl.buyer.postOrderPointId(req.body);
 
       res.status(200).json(result);
 

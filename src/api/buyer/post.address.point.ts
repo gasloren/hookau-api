@@ -19,7 +19,7 @@ export function postAddressPoint(
 
     const {
       city,
-      orderId,
+      orderId, // <-- if exists we are calling from order page
       removeId,
       pointData
     } = params;
@@ -34,6 +34,9 @@ export function postAddressPoint(
     if (redirect) return { redirect };
     if (!buyer?._id) return OOPS;
 
+    // ***************
+    // ** Remove Point
+
     if (removeId) {
       const updated = await mdb.buyers.update({
         email: userEmail
@@ -42,16 +45,19 @@ export function postAddressPoint(
           [`points.${removeId}`]: ''
         }
       });
+      if (!updated) return OOPS;
       return {
-        success: !!updated
+        success: true,
+        redirect: !orderId
+          ? `/buyer/${city}/points`
+          : `/buyer/${city}/order/${orderId}/delivery`
       };
     }
 
-    if (!pointData?.id) {
-      return {
-        warning: 'Parametros invalidos'
-      };
-    } 
+    // ***************
+    // ** Update Point
+
+    if (!pointData?.id) return BAD_PARAMS;
 
     const updated = await mdb.buyers.update({
       email: userEmail
@@ -63,24 +69,11 @@ export function postAddressPoint(
 
     if (!updated) return OOPS;
 
-    if (orderId) {
-      const updated = await mdb.orders.update({
-        _id: orderId
-      }, {
-        $set: {
-          pointData
-        }
-      });
-      if (!updated) return OOPS;
-      return {
-        success: true,
-        redirect: `/buyer/${city}/order/${orderId}/delivery`
-      }
-    }
-
     return {
       success: true,
-      redirect: `/buyer/${city}/points`
+      redirect: !orderId
+        ? `/buyer/${city}/points`
+        : `/buyer/${city}/order/${orderId}/delivery`
     };
 
   }

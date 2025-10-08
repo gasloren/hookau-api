@@ -13,7 +13,8 @@ export * as GetPointsPageData from './get.points.page.data.js';
 export * as PostAddressPoint from './post.address.point.js';
 export * as GetAccountPageData from './get.account.page.data.js';
 export * as PostAccountProfile from './post.account.profile.js';
-export * as ProstOrderModeData from './post.order.mode.data.js';
+export * as PostOrderModeData from './post.order.mode.data.js';
+export * as PostOrderPointId from './post.order.point.id.js';
 
 export * from './controller.js';
 

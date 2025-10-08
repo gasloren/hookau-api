@@ -11,29 +11,20 @@ import { checkBuyerRedirect } from './helpers/check.email.redirect.js';
  * @param db
  * @returns 
  */
-export function postOrderModeData(
+export function postOrderPointId(
   mdb: IDatabase,
   userEmail: string | null
-): T.Api.Buyer.PostOrderModeData.Method {
+): T.Api.Buyer.PostOrderPointId.Method {
   
   return async (params) => {
 
     const {
       city,
       orderId,
-      modality,
-      receiver
+      pointId
     } = params;
 
-    if (!city || !orderId) return BAD_PARAMS;
-
-    if (modality !== 'delivery' && modality !== 'takeaway') {
-      return BAD_PARAMS;
-    }
-
-    if (!receiver?.fname || !receiver?.phone) {
-      return BAD_PARAMS;
-    }
+    if (!city || !orderId || !pointId) return BAD_PARAMS;
 
     const {
       redirect,
@@ -43,6 +34,32 @@ export function postOrderModeData(
     if (redirect) return { redirect };
     if (!buyer?._id) return OOPS;
 
+    if (!buyer.points?.[pointId]) return OOPS;
+
+    const {
+      cityCode,
+      address,
+      location
+    } = buyer.points[pointId];
+
+    if (cityCode !== city) {
+      return {
+        warning: 'La dirección no pertenece a esta ciudad'
+      };
+    }
+
+    if (!address?.length) {
+      return {
+        warning: 'Por favor ingrese la dirección de entrega'
+      };
+    }
+
+    if (!location?.lat || !location?.lng) {
+      return {
+        warning: 'Por favor marque la posición en el mapa'
+      };
+    }
+
     const updated = await mdb.orders.update({
       _id: orderId,
       process: 0,
@@ -50,8 +67,7 @@ export function postOrderModeData(
       storeCity: city
     }, {
       $set: {
-        modality,
-        receiver,
+        pointData: buyer.points[pointId],
         statusId: randomId()
       }
     });
@@ -60,7 +76,7 @@ export function postOrderModeData(
 
     return {
       success: true,
-      redirect: `/buyer/${city}/order/${orderId}/${modality}`
+      redirect: `/buyer/${city}/order/${orderId}/checkout`
     };
 
   }
