@@ -19,6 +19,7 @@ export function postAddressPoint(
 
     const {
       city,
+      orderId,
       removeId,
       pointData
     } = params;
@@ -60,8 +61,26 @@ export function postAddressPoint(
       }
     });
 
+    if (!updated) return OOPS;
+
+    if (orderId) {
+      const updated = await mdb.orders.update({
+        _id: orderId
+      }, {
+        $set: {
+          pointData
+        }
+      });
+      if (!updated) return OOPS;
+      return {
+        success: true,
+        redirect: `/buyer/${city}/order/${orderId}/delivery`
+      }
+    }
+
     return {
-      success: !!updated
+      success: true,
+      redirect: `/buyer/${city}/points`
     };
 
   }

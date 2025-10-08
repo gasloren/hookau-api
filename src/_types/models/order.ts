@@ -1,3 +1,4 @@
+import type { Point } from './buyer.js';
 import type { FormattedMenue, FormattedProduct, MenueOption } from './menue.js';
 import type { Coords } from './shared.js';
 
@@ -26,7 +27,6 @@ export interface Shipping {
   lat: string;
   lng: string;
   name: string;
-  coords: Coords;
 }
 
 export interface Receiver {
@@ -167,7 +167,8 @@ export interface Order {
   processAt: ProcessAt;
   createdAt: Date;
   modality?: Modality;
-  shipping?: Shipping;
+  shipping?: Shipping; // deprecate
+  pointData?: Point;
   receiver?: Receiver;
   userData: UserData;
   storeName: string;

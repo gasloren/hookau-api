@@ -15,6 +15,7 @@ export type Endpoint = '/buyer-api/post-address-point';
 
 export type Params = {
   city: string;
+  orderId?: string;
   removeId?: string;
   pointData?: Point;
 }
