@@ -20,21 +20,24 @@ export function toNewOrderData(
     createdAt: new Date(),
     clientId: buyer._id,
     userData: {
-      fname: buyer.profile?.nombre || '',
-      lname: buyer.profile?.apellido || '',
-      phone: buyer.profile?.telefono || '',
+      fname: buyer.profile?.fname || '',
+      lname: buyer.profile?.lname || '',
+      phone: buyer.profile?.phone || '',
       email: buyer.email?.[0] || ''
     },
     receiver: {
-      fname: buyer.profile?.nombre || '',
-      phone: buyer.profile?.telefono || ''
+      fname: buyer.profile?.fname || '',
+      phone: buyer.profile?.phone || ''
     },
     storeName: store.data.brand,
     storeLogo: store.data.logourl,
     storeCity: store.city,
     storeAddr: store.data.address,
     storeCoords: store.data.coords,
-    cityCoords: city.coords,
+    cityCoords: {
+      lat: city.centerLat,
+      lng: city.centerLng
+    },
     orderMenue: toFormattedMenue(store.menue),
     orderItems: [],
     orderView: [],

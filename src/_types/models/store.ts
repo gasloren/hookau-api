@@ -16,7 +16,7 @@ export interface StoreData {
   genres: string;
   index: number;
   others: string;
-  coords: Coords;
+  coords: Coords;  // <-- new
 }
 
 export interface StoreInfo {
@@ -37,7 +37,6 @@ export interface StoreAfip {
   direccionEmail: string;
   referencia: string;
 }
-
 
 export interface StoreStatus {
   active: boolean;
@@ -60,14 +59,14 @@ export interface StoreCharges {
 export interface Store {
   _id: string;
   city: string;
-  afip: StoreAfip;
+  afip: StoreAfip; // <-- new
   ownerId?: string;
   marketFee: number;
   chargeFrom: string;  //  "2020-10-01"
   charges: StoreCharges;
   status: StoreStatus;
   published: "SHOW" | "HIDE" | "TEST";
-  publication: "FULL" | "CALL" | "INIT" | "TEST";
+  publication: "FULL" | "CALL" | "INIT" | "TEST"; // deprecate
   createdAt: Date;
   data: StoreData;
   info: StoreInfo;
@@ -93,7 +92,7 @@ export interface StoreMinified {
 
 // --
 
-// astatus table for frontend status refresh
+// status table for frontend status refresh
 export type StoreStatusInfo = {
   activeStr: 'true' | 'false';
   unseenStr: string;

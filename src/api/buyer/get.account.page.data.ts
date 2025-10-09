@@ -1,9 +1,9 @@
 import type { T } from '../../_types/index.js';
+import type { HookerV1 } from '../../_types/models/user.js';
 import type { IDatabase } from '../../mongo/types.js';
 
 import { BAD_PARAMS, OOPS } from '../constants.js';
 import { checkBuyerRedirect } from './helpers/check.email.redirect.js';
-import { checkHookerMigration } from './helpers/migrate.hooker.data.js';
 
 // --
 /**
@@ -35,10 +35,10 @@ export function getAccountPageData(
     const city = await mdb.cities.getOne({ _id: cityId });
     if (!city?._id) return OOPS;
 
-    const riderId = buyer.rider?.id;
-    await checkHookerMigration(mdb, cityId, riderId);
-
-    const rider = await mdb.riders.getOne({ email: userEmail });
+    const rider = await mdb.users.getOne({
+      email: userEmail,
+      userrole: 'hooker'
+    }) as HookerV1;
 
     return {
       success: true,

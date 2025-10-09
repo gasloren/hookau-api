@@ -1,5 +1,9 @@
+
+// -- types
 import type { T } from '../../../_types/index.js';
 import type { IDatabase } from '../../../mongo/types.js';
+
+// -- utils
 import { randomId } from '../../../utils.js';
 
 // ---
@@ -52,7 +56,6 @@ export async function migrateClientToBuyer(
     point1,
     point2,
     point3,
-    driver,
     profile,
     required = {},
     customerId = '',
@@ -76,15 +79,14 @@ export async function migrateClientToBuyer(
     points[d3.id] = { ...d3 };
   }
 
-  const data: Partial<T.Model.Buyer> = {
+  const data: T.Model.Buyer = {
     _id,
     email,
-    rider: driver,
     points,
     profile: {
-      nombre: profile?.nombre || '',
-      apellido: profile?.apellido || '',
-      telefono: profile?.telefono || ''
+      fname: profile?.nombre || '',
+      lname: profile?.apellido || '',
+      phone: profile?.telefono || ''
     },
     required,
     customerId

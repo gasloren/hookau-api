@@ -12,26 +12,23 @@ export async function checkPendingEmail(
   email: string
 ): Promise<void> {
 
-  const auth = await mdb.auth.getOne({
-    pending: email,
-    expires: {
-      $exists: true,
-      $gte: Date.now()
-    }
+  const buyer = await mdb.buyers.getOne({
+    email: { $ne: email },
+    ['authPending.email']: email,
+    ['authPending.expAt']: { $exists: true, $gte: Date.now() }
   });
 
-  if (!auth) return;
+  if (!buyer) return;
 
   await mdb.buyers.update({
-    email: auth.email
+    email: buyer.email
   }, {
     $set: {
       email
+    },
+    $unset: {
+      authPending: ''
     }
-  });
-
-  await mdb.auth.remove({
-    email: auth.email
   });
 
 }

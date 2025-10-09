@@ -27,7 +27,7 @@ export interface Point_V1 {
   referencia: string;
 }
 
-export interface Profile {
+export interface Profile_V1 {
   nombre: string;
   apellido: string;
   telefono: string;
@@ -38,7 +38,7 @@ export interface Required {
   conditionsAccepted?: Date;
 }
 
-export interface RiderAccount {
+export interface DriverAccount {
   id: string;
   city: string;
   status: "register" | "enabled" | "disabled";
@@ -46,11 +46,11 @@ export interface RiderAccount {
 
 export interface Client {
   _id: string;
-  email?: string;
-  verifiedEmail?: string;
+  email: string;
+  verifiedEmail: string;
   phone?: string;
   verifiedPhone?: string;
-  profile?: Profile;
+  profile?: Profile_V1;
   required?: Required;
   loggedAt?: Date;
   geolocation?: Geolocation;
@@ -60,10 +60,14 @@ export interface Client {
   likeds?: string;
   service?: "email" | "phone";
   customerId?: string;
-  driver?: RiderAccount;
+  driver?: DriverAccount;
   updatedAt?: Date;
 }
 
+
+/**
+ ** New Model Buyer
+ */
 
 export interface Point {
   id: string; // number to string
@@ -76,15 +80,19 @@ export interface Point {
   reference: string; // numero de puerta o referencia
 }
 
-
 export interface Points {
   [ id: string ]: Point;
 };
 
+export interface Profile {
+  fname: string;
+  lname: string;
+  phone: string;
+}
+
 export interface Buyer {
   _id: string;
   email: string;
-  rider?: RiderAccount | undefined;
   points: Points;
   profile: Profile;
   blocked?: boolean;

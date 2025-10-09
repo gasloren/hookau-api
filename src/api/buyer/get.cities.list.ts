@@ -18,13 +18,6 @@ export function getCitiesList(
     const cities = await mdb.cities.search({}, {
       sort: {
         name: 1
-      },
-      projection: {
-        _id: 1,
-        name: 1,
-        status: 1,
-        coords: 1,
-        country: 1
       }
     });
 

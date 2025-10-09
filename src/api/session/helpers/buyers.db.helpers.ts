@@ -9,7 +9,7 @@ export async function findClientByEmail(
   email: string = '???'
 ): Promise<T.Model.Client | null> {
 
-  return await mdb.v1.clients.getOne({ verifiedEmail: email });
+  return await mdb.clients.getOne({ verifiedEmail: email });
 
 }
 
@@ -59,9 +59,9 @@ export async function createNewBuyer(
     email,
     points: {},
     profile: {
-      nombre: '',
-      apellido: '',
-      telefono: ''
+      fname: '',
+      lname: '',
+      phone: ''
     },
     customerId: ''
   };

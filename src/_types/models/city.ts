@@ -2,6 +2,7 @@ import type { Coords } from './shared.js';
 
 // ---
 
+/*
 export type CityStatus =
   'published' |
   'processing' |
@@ -22,12 +23,24 @@ export interface City {
   batchHour: string;  // "03:00"
   upgraded?: boolean;
 }
+*/
 
-export interface City_V1 {
+export interface Zone {
   _id: string;
-  id: string;
   code: string;
-  gtm: string;
+  name: string;
+  cost: [
+    number,
+    number
+  ];
+  deny: string;
+}
+
+export interface City {
+  _id: string;  // <- city code: "AR8371"
+  id: string;   // deprecate
+  code: string; // deprecate
+  gtm: string;  // deprecate
   name: string;
   enabled: boolean;
   country: "AR";
@@ -37,14 +50,13 @@ export interface City_V1 {
     batchHour: string;
   },
   currLogister: string;
-  zones: {
-    _id: string;
-    code: string;
-    name: string;
-    cost: [
-      number,
-      number
-    ];
-    deny: string;
-  }[];
+  zones: Zone[]; // deprecate
+
+  /**
+   * new properties
+   */
+  gtmOffset: number;
+  centerLat: number;
+  centerLng: number;
 }
+

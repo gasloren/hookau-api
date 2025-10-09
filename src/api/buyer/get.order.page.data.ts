@@ -58,7 +58,10 @@ export function getOrderPageData(
         orderData: order,
         userPoints: buyer.points,
         statusInfo: toStoreStatusInfo(store.status),
-        cityCoords: city.coords,
+        cityCoords: {
+          lat: city.centerLat,
+          lng: city.centerLng
+        },
         storeCoords: store.data.coords
       }
     };

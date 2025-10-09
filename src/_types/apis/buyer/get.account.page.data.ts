@@ -5,7 +5,7 @@ import type { ApiResponse } from '../shared.js';
 // models types
 import type {
   Buyer,
-  Rider
+  HookerV1
 } from '../../models/index.js';
 
 // ---
@@ -20,7 +20,7 @@ export type Params = {
 
 export type Payload = {
   buyer: Buyer;
-  rider: Rider | null;
+  rider: HookerV1 | null;
 }
 
 export type Method = (

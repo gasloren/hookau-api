@@ -14,8 +14,8 @@ export interface Credential {
   _id: string;
   storeId: string;
   storeName: string;
-  publicKey: string;
-  accessToken: string;
-  accountAlias: string;
+  publicKey?: string;
+  accessToken?: string;
+  accountAlias?: string;
   oauth?: OAuth;
 }

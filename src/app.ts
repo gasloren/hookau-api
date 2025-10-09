@@ -13,8 +13,6 @@ import {
 } from './middlewares/middlewares.js';
 import { apiRoutes } from './routes/api.routes.js';
 import { gracefulShutdown } from './handlers/shut.down.js';
-import { startupInitialize } from './handlers/startup.initialize.js';
-import { Database } from './mongo/database.js';
 
 // -------------------------------
 
@@ -45,10 +43,6 @@ export default async function serverApp({
   // If error it will exit server
   const mongoClient = await mongoConnect(); // MongoDB client instance
   const redisClient = await redisConnect(); // RedisDB client instance
-
-  // TODO remove this line after first start
-  // this function converts data from v1 to v3 models
-  await startupInitialize(Database(mongoClient.db(process.env.DATABASE)));
 
   app.use(cors());
   app.use(express.json({ limit: '10mb' })); // <-- for base64 images

@@ -19,7 +19,10 @@ export type Params = {
   orderItems: OrderItem[];
 }
 
-export type Payload = void;
+export type Payload = {
+  storeIsOffline?: boolean;
+  itemsOutOfStock?: string[];
+};
 
 export type Method = (
   params: Params

@@ -14,7 +14,10 @@ export type Params = {
   pointId: string;
 }
 
-export type Payload = void;
+export type Payload = {
+  storeIsOffline?: boolean;
+  itemsOutOfStock?: string[];
+};
 
 export type Method = (
   params: Params

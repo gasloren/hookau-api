@@ -1,13 +1,9 @@
 
 import type {
-  Auth,
   City,
-  Zone,
   Buyer,
-  Rider,
   Store,
   Order,
-  City_V1,
   ApiLogs,
   AppLogs,
   User_V1,
@@ -31,19 +27,13 @@ export interface DbMethods<Model> {
 // ----
 
 export interface IDatabase {
-  auth: DbMethods<Auth>;
   cities: DbMethods<City>;
-  zones: DbMethods<Zone>;
   buyers: DbMethods<Buyer>;
-  riders: DbMethods<Rider>;
   stores: DbMethods<Store>;
   orders: DbMethods<Order>;
   apiLogs: DbMethods<ApiLogs>;
   appLogs: DbMethods<AppLogs>;
   credentials: DbMethods<Credential>;
-  v1: {
-    users: DbMethods<User_V1>;
-    cities: DbMethods<City_V1>;
-    clients: DbMethods<Client>;
-  }
+  users: DbMethods<User_V1>;
+  clients: DbMethods<Client>;
 }

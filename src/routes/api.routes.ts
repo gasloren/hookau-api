@@ -10,7 +10,6 @@ import { getMinifiedStores } from './buyer/get.minified.stores.js';
 import { getStoresStatusInfo } from './buyer/get.stores.status.info.js';
 import { getStoreStatusInfo } from './buyer/get.store.status.info.js';
 import { getStoreItem } from './buyer/get.store.item.js';
-import { userSession } from './user.session.js';
 import { postSessionSignUp } from './session/post.session.signup.js';
 import { postSessionVerify } from './session/post.session.verify.js';
 import { getStoresPromos } from './buyer/get.stores.promos.js';
@@ -28,8 +27,6 @@ import { postOrderPointId } from './buyer/post.order.point.id.js';
 // ----
 
 export function apiRoutes(app: Application) {
-
-  userSession(app);
 
   // frontend errors logger
   appLogger(app);

@@ -21,7 +21,10 @@ export type Params = {
   receiver: Receiver;
 }
 
-export type Payload = void;
+export type Payload = {
+  storeIsOffline?: boolean;
+  itemsOutOfStock?: string[];
+};
 
 export type Method = (
   params: Params

@@ -5,6 +5,7 @@ import { OOPS, BAD_PARAMS } from '../constants.js';
 import { randomId } from '../../utils.js';
 import { checkBuyerRedirect } from './helpers/check.email.redirect.js';
 import ordersUtils from './helpers/to.order.viewer.list.js';
+import { checkItemsOutOfStock } from './helpers/check.items.out.of.stock.js';
 
 // --
 /**
@@ -52,6 +53,7 @@ export function postMenuOrderItems(
     if (!order) return OOPS;
 
     const orderView = ordersUtils.toOrderViewerList({ ...order, orderItems });
+
     // recalculamos los totales de la orden
     const {
       amount,
@@ -79,6 +81,27 @@ export function postMenuOrderItems(
     });
 
     if (!updated) return OOPS;
+
+    if (!store.status?.active) {
+      return {
+        success: true,
+        message: 'El comercio se ha desactivado',
+        payload: {
+          storeIsOffline: true
+        }
+      };
+    }
+
+    const itemsOutOfStock = checkItemsOutOfStock(orderView, store.status?.unseen);
+    if (itemsOutOfStock.length) {
+      return {
+        sucess: true,
+        message: 'Hay items que ya no están disponibles',
+        payload: {
+          itemsOutOfStock
+        }
+      };
+    }
 
     return {
       success: true,

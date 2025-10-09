@@ -9,13 +9,6 @@ export type App =
   'store' |
   'super';
 
-export type UserSession = {
-  app: App;
-  city: string;
-  email: string;
-  userId: string;
-}
-
 export type Token = {
   name: string;
   value: string;

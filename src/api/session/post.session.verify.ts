@@ -47,11 +47,10 @@ export function postSessionVerify(
 
     // ** from here is not buyer, is an operative user
 
-    const auth = await mdb.auth.getOne({
-      email
-    });
-
-    const hasAuth = !!auth?.allow?.[app]?.includes(city);
+    // TODO
+    // check if exists user by app
+    
+    const hasAuth = false;
 
     if (!hasAuth) {
       return {
