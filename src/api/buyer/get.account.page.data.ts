@@ -36,8 +36,9 @@ export function getAccountPageData(
     if (!city?._id) return OOPS;
 
     const rider = await mdb.users.getOne({
-      email: userEmail,
-      userrole: 'hooker'
+      'profile.email': userEmail,
+      userrole: 'hooker',
+      enabled: true
     }) as HookerV1;
 
     return {
