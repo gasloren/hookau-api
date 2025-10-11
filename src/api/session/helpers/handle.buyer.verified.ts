@@ -106,11 +106,9 @@ async function handlePendingBuyer(
 
   const warning = 'No pudimos cambiar el email de la cuenta, intente nuevamente.';
 
-  if (!buyer.authPending) return { warning };
+  if (!buyer?.authPending?.email) return { warning };
 
   const email = buyer.authPending.email;
-  if (!email) return { warning };
-
   const expiresAt = buyer.authPending.expAt || 0;
 
   if (Date.now() > expiresAt) {

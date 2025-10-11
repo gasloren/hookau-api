@@ -1,4 +1,4 @@
-import type { Coords } from './shared.js';
+// import type { Coords } from './shared.js';
 
 // ---
 

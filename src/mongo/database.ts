@@ -10,13 +10,13 @@ export function Database(mongo: Db): IDatabase {
   return {
     users: dbMethods(mongo.collection('users')),
     cities: dbMethods(mongo.collection('cities')),
-    clients: dbMethods(mongo.collection('clients')),
+    clients: dbMethods(mongo.collection('clients')), // <-- deprecate
     buyers: dbMethods(mongo.collection('buyers')),
     stores: dbMethods(mongo.collection('stores')),
     orders: dbMethods(mongo.collection('orders')),
     apiLogs: dbMethods(mongo.collection('api_logs')),
     appLogs: dbMethods(mongo.collection('app_logs')),
-    credentials: dbMethods(mongo.collection('credentials')),
+    credentials: dbMethods(mongo.collection('credentials'))
   };
 
 }
