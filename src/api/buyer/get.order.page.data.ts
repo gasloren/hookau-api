@@ -38,7 +38,7 @@ export function getOrderPageData(
       process: 0,
       clientId: buyer._id
     });
-    if (!order?._id) return OOPS;
+    if (!order?.orderView) return OOPS;
 
     const store = await mdb.stores.getOne({
       _id: order.storeId,
@@ -57,12 +57,7 @@ export function getOrderPageData(
         cityName: city.name,
         orderData: order,
         userPoints: buyer.points,
-        statusInfo: toStoreStatusInfo(store.status),
-        cityCoords: {
-          lat: city.centerLat,
-          lng: city.centerLng
-        },
-        storeCoords: store.data.coords
+        statusInfo: toStoreStatusInfo(store.status)
       }
     };
 
