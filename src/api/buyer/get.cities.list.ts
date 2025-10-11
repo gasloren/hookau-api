@@ -17,7 +17,7 @@ export function getCitiesList(
 
     const cities = await mdb.cities.search({}, {
       sort: {
-        name: 1
+        index: 1
       }
     });
 
