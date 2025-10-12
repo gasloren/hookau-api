@@ -23,11 +23,16 @@ export function toNewOrderData(
       fname: buyer.profile?.fname || '',
       lname: buyer.profile?.lname || '',
       phone: buyer.profile?.phone || '',
-      email: buyer.email?.[0] || ''
+      email: buyer.email || ''
     },
     receiver: {
       fname: buyer.profile?.fname || '',
       phone: buyer.profile?.phone || ''
+    },
+    payerData: {
+      fname: buyer.profile?.fname || '',
+      lname: buyer.profile?.lname || '',
+      email: buyer.email || ''
     },
     storeName: store.data.brand,
     storeLogo: store.data.logourl,

@@ -42,9 +42,9 @@ export interface UserData {
 }
 
 export interface PayerData {
-  firstName: string;
-  lastName: string;
-  emailAddress: string;
+  fname: string;
+  lname: string;
+  email: string;
 }
 
 export type MpStatus = 'approved' | 'refunded';
