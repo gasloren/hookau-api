@@ -7,6 +7,7 @@ import type {
 
 import type {
   ViewerList,
+  ViewTotals,
   OrderItem,
   Adjustments,
   OptionWithUnits,
@@ -200,12 +201,7 @@ function toOrderViewTotals(
   orderMenue: FormattedMenue,
   orderItems: OrderItem[],
   ignoreAdjustments?: boolean
-): {
-  amount: number;
-  netAmount: number;
-  extras: number;
-  charged: number;
-} {
+): ViewTotals {
   let amount = 0;
   let netAmount = 0;
   let extras = 0;

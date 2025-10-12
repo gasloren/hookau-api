@@ -55,12 +55,14 @@ export function postMenuOrderItems(
     const orderView = ordersUtils.toOrderViewerList({ ...order, orderItems });
 
     // recalculamos los totales de la orden
+    const viewTotals = ordersUtils.toOrderViewTotals(order.orderMenue, orderItems);
+
     const {
       amount,
       netAmount,
       extras,
       charged // <-- netAmount + extras
-    } = ordersUtils.toOrderViewTotals(order.orderMenue, orderItems);
+    } = viewTotals;
 
     const accredited = order.accredited || 0;
 
@@ -70,6 +72,7 @@ export function postMenuOrderItems(
     }, {
       $set: {
         orderView,
+        viewTotals,
         orderItems,
         orderTotal: charged,
         discounted: amount - netAmount,

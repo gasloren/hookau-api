@@ -41,6 +41,12 @@ export function toNewOrderData(
     orderMenue: toFormattedMenue(store.menue),
     orderItems: [],
     orderView: [],
+    viewTotals: {
+      amount: 0,
+      netAmount: 0,
+      extras: 0,
+      charged: 0
+    },
     orderTotal: 0,
     discounted: 0,
     accredited: 0,

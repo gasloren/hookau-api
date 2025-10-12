@@ -160,6 +160,13 @@ export interface ViewerItem {
 
 export type ViewerList = ViewerItem[];
 
+export type ViewTotals = {
+  amount: number;
+  netAmount: number;
+  extras: number;
+  charged: number;
+}
+
 export interface Order {
   _id: string;
   refCode?: string; // deprecado
@@ -181,7 +188,8 @@ export interface Order {
   cityCoords: Coords;
   orderMenue: FormattedMenue;
   orderItems: OrderItem[];
-  orderView?: ViewerList;
+  orderView: ViewerList;
+  viewTotals: ViewTotals;
   testing?: boolean;
   accredited: number;
   balanceDue: number;
