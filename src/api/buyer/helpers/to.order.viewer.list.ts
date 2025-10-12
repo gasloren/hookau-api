@@ -11,8 +11,7 @@ import type {
   Adjustments,
   OptionWithUnits,
   ProductItem,
-  ProductWithItems,
-  Order
+  ProductWithItems
 } from '../../../_types/models/order.js';
 
 // --------

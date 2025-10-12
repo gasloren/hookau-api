@@ -21,6 +21,7 @@ export type Params = {
 
 export type Payload = {
   storeIsOffline?: boolean;
+  itemsOutOfStock?: string[];
 };
 
 export type Method = (

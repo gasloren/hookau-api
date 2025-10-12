@@ -92,6 +92,17 @@ export function postMenuOrderItems(
       };
     }
 
+    const itemsOutOfStock = checkItemsOutOfStock(orderView, store.status?.unseen);
+    if (itemsOutOfStock.length) {
+      return {
+        sucess: true,
+        message: 'Hay items que ya no están disponibles',
+        payload: {
+          itemsOutOfStock
+        }
+      };
+    }
+
     return {
       success: true,
       redirect: `/buyer/${city}/order/${order._id}/modality`

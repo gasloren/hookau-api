@@ -27,26 +27,26 @@ export function checkItemsOutOfStock(
 
   viewerList.forEach(({ id: catgId, name: catgName, products = [] }) => {
 
-    products.forEach(({ id: prodId, name: prodName, code: prodCode = '????', pickers = [] }) => {
+    products.forEach(({ id: prodId, name: prodName, code: prodCode = '????', items = [] }) => {
+
+      cn = Formatter.capitalizeTitle(catgName);
+      pn = Formatter.capitalizeTitle(prodName);
 
       if (outOfStock.includes(catgId) || outOfStock.includes(prodId) || outOfStock.includes(prodCode)) {
 
-        cn = Formatter.capitalizeTitle(catgName);
-        pn = Formatter.capitalizeTitle(prodName);
-
-        warnings.push(`${cn}:${pn}`);
+        if (items.length > 0) warnings.push(`${cn}:${pn}`);
 
       } else {
 
-        pickers.forEach(({ options = [] }) => {
+        items.forEach(({ pickList }) => {
 
-          options.forEach(({ id: optnId, name: optnName, code: optnCode = '????' }) => {
+          pickList.forEach(({ id: optnId, name: optnName, code: optnCode = '????', units = 0 }) => {
 
             if (outOfStock.includes(optnId) || outOfStock.includes(optnCode)) {
 
               on = Formatter.capitalizeTitle(optnName);
 
-              warnings.push(`${cn}:${pn}:${on}`);
+              if (units > 0) warnings.push(`${cn}:${pn}:${on}`);
 
             }
 
