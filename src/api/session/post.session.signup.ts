@@ -3,6 +3,7 @@ import type { T } from '../../_types/index.js';
 import type { IRedisDB } from '../../redis/types.js';
 
 import Mailer from '../../mailer/mailer.js';
+import allowedEmails from '../../allowed.emails.js';
 
 // --
 /**
@@ -21,6 +22,13 @@ export function postSessionSignUp(
     const {
       email
     } = params;
+
+    if (!allowedEmails.includes(email)) {
+      return {
+        rejected: true,
+        redirect: '/rejected'
+      }
+    }
 
     const timestamp = Date.now().toString();
     const l = timestamp.length;

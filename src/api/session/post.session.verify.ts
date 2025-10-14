@@ -7,6 +7,7 @@ import type { IRedisDB } from '../../redis/types.js';
 // -- helpers
 import { generateTokenResponse } from './helpers/gen.token.response.js';
 import { handleBuyerVerified } from './helpers/handle.buyer.verified.js';
+import allowedEmails from '../../allowed.emails.js';
 
 // --
 /**
@@ -28,6 +29,13 @@ export function postSessionVerify(
       vcode,
       newEmail
     } = params;
+
+    if (!allowedEmails.includes(email)) {
+      return {
+        rejected: true,
+        redirect: '/rejected'
+      }
+    }
 
     const storedCode = await rdb.get(email);
 

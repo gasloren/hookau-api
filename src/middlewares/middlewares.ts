@@ -4,6 +4,7 @@ import type { IRedisDB } from '../redis/types.js';
 
 import { Database } from '../mongo/database.js';
 import { ApiController } from '../api/api.controller.js';
+import allowedEmails from '../allowed.emails.js';
 
 // ----
 
@@ -17,7 +18,7 @@ export function checkApiCommKey(
       res.status(401).json({
         message: 'Not authorized',
         warning: 'Not authorized',
-        redirect: '/',
+        redirect: '/rejected',
         rejected: true
       });
       return;
@@ -39,7 +40,18 @@ export function attachApiController(
     req.redisdb = redisClient;
     const token = req.headers['x-session-token'] as string;
     const email = await req.redisdb.get(token);
-    if (email) req.userEmail = email;
+    if (email) {
+      if (!allowedEmails.includes(email)) {
+        res.status(401).json({
+          message: 'Not authorized',
+          warning: 'Not authorized',
+          redirect: '/rejected',
+          rejected: true
+        });
+        return;
+      }
+      req.userEmail = email;
+    }
     req.apiCtrl = ApiController(req);
     next();
   });
