@@ -111,7 +111,7 @@ export function postOrderPointId(
 
     return {
       success: true,
-      redirect: `/buyer/${city}/order/${orderId}/checkout`
+      redirect: `/buyer/${city}/order/${orderId}/delivery/${pointId}/view`
     };
 
   }
