@@ -1,5 +1,6 @@
 import type { T } from '../../_types/index.js';
 import type { IDatabase } from '../../mongo/types.js';
+import { randomId } from '../../utils.js';
 
 import { BAD_PARAMS, OOPS } from '../constants.js';
 import { checkBuyerRedirect } from './helpers/check.email.redirect.js';
@@ -43,6 +44,9 @@ export function postAddressPoint(
       }, {
         $unset: {
           [`points.${removeId}`]: ''
+        },
+        $set: {
+          statusId: randomId()
         }
       });
       if (!updated) return OOPS;
@@ -69,11 +73,22 @@ export function postAddressPoint(
 
     if (!updated) return OOPS;
 
+    if (orderId) {
+      await mdb.buyers.update({
+        email: userEmail
+      }, {
+        $set: {
+          pointData,
+          statusId: randomId()
+        }
+      });
+    }
+
     return {
       success: true,
       redirect: !orderId
         ? `/buyer/${city}/points`
-        : `/buyer/${city}/order/${orderId}/delivery`
+        : `/buyer/${city}/order/${orderId}/delivery/${pointData.id}/view`
     };
 
   }

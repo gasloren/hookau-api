@@ -33,7 +33,7 @@ function pointV1ToV3(
     referencia = ''
   } = pointV1 || {};
   return {
-    id: randomId(),
+    id: randomId('', 6),
     alias: codigo.toLowerCase(),
     address: `${calle} ${altura}, ${ciudad}`,
     apartNum: numero.toLowerCase(),
